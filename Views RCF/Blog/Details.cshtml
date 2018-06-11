@@ -1,0 +1,133 @@
+﻿@model Mutualex.Blog
+
+@{
+    ViewBag.Title = "Event Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    TempData["Setting"] = "class=" + "active";
+    TempData["BlogList"] = "class=" + "active";
+
+    TempData["PageTitle"] = "Blog Details";
+}
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+
+
+@if (TempData["AMSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["AMSG"]</strong>
+    </div>
+}
+
+<div class="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet box panel panel-grey">
+                <div class="panel-heading">
+                    Blog Details
+                </div>
+                <div class="portlet-body">
+
+                    <div class="form-body pal">
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+
+                                    <h3>@Model.Title</h3>
+                                    <label style="float:right">  <i class="fa fa-calendar" aria-hidden="true"></i> @Model.OnDate</label><span>Posted By : @Model.PostedBy</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @if (String.IsNullOrEmpty(Model.MediaUrl))
+                                    {
+                                    }
+                                    else
+                                    {
+                                    <img src="@Model.MediaUrl.Replace("~","")" style="width:100%;margin-bottom:20px" />
+
+                                    }
+
+                                    @* @if (String.IsNullOrEmpty(@info.Vurl))
+                                        {
+                                        }
+                                        else
+                                        {
+
+                                            <video src="@info.Vurl" autoplay="autoplay"  style="width:100%">
+                                                 <source src="@info.Vurl" >
+                                            </video>
+                                        }*@
+
+                                    @if (Model.VideoUrl != null)
+                                    {
+
+                                        if (Model.Mediatype != "Vimeo")
+                                        {
+                                    <iframe allowfullscreen="true" allowscriptaccess="always" frameborder="0" height="280" src="https://www.youtube.com/embed/@Model.VideoUrl" title="YouTube video player" width="640" style="height: 397px;width: 100%;"></iframe>
+
+                                        }
+                                        else
+                                        {
+                                    <iframe src="https://player.vimeo.com/video/@Model.VideoUrl" width="640" height="397" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                                        }
+
+                                    }
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+
+                                    <p>  @Html.Raw(HttpUtility.HtmlDecode(@Model.Description))</p>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section scripts{
+
+
+    @*<script>
+            function ChangeStat(stat) {
+
+                window.location = '/EM/CloseEvent/' + '@info.id' + '/' + stat;
+            }
+
+        </script>*@
+
+
+
+}
+
+

@@ -1,0 +1,166 @@
+﻿@model Mutualex.Testimonial
+@{
+    TempData["PageTitle"] = "Testimonial";
+    TempData["Home"] = "class=" + "active";
+    TempData["Testimonial"] = "class=" + "active";
+    ViewBag.Title = "Testimonial";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-blue">
+                <div class="panel-heading">
+                    Add Testimonial
+                </div>
+                <div class="panel-body pan">
+
+
+                    @using (Html.BeginForm("Testimonial", "BasicSetting", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-body pal">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Name </label>
+                                    @Html.TextBoxFor(model => model.Name, new { @placeholder = "Name", @required = "required", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.Id, new { })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Designation </label>
+                                    @Html.TextBoxFor(model => model.Designation, new { @placeholder = "Designation", @required = "required", @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>Content </label>
+                                    @Html.TextAreaFor(model => model.Message, new { @placeholder = "Content", @class = "form-control", @style = "height: 120px" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Upload Image <span class="require"></span></label>
+                                    <input type="file" name="fp1" class="form-control" id="fp1" />
+                                    <div style="padding-top: 12px; padding-bottom: 12px">
+                                        @if (@Model.ImgUrl == "")
+                                        {
+                                            <img src="~/DataImages/images.png" alt="Image" style="width:20%; height:auto;" class="img-responsive" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@Model.ImgUrl.Replace("~", "")" alt="Image" style="width: 64%; border: 6px solid #222222; border-radius: 16px;" class="img-responsive" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <input id="Submit1" type="submit" class="btn btn-success " value="SUBMIT" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="portlet box panel panel-grey">
+                                <div class="panel-heading">
+                                    Testimonial List
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row mbm">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                                <table id="table_id" class="table table-hover table-striped table-bordered tablesorter">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:20%">Name</th>
+                                                            <th style="width:30%">Designation</th>
+                                                            <th style="width:30%">Image</th>
+                                                            <th style="width:30%">View / Edit</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        @foreach (Testimonial i in ViewBag.tstlst)
+                                                        {
+                                                            <tr>
+                                                                <td>@i.Name</td>
+                                                                <td>@i.Designation</td>
+                                                                <td>
+                                                                    @if (@i.ImgUrl != null)
+                                                                    {
+                                                                        <img src="@i.ImgUrl.Replace("~", "")" alt="@i.Name" style="width:22%" class="img-responsive" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="~/images/bg/DefltImg.png" alt="Image Not Available" style="width: 22%" class="img-responsive" />
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/BasicSetting/Testimonial/@i.Id" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+@section scripts{
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/summernote/summernote.css">
+    <script src="~/admin_assets/vendors/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+    <script src="~/admin_assets/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="~/admin_assets/vendors/ckeditor/ckeditor.js"></script>
+    <script src="~/admin_assets/vendors/summernote/summernote.js"></script>
+    <script src="~/admin_assets/js/ui-editors.js"></script>
+    <script src="/admin_assets/vendors/DataTables/media/js/jquery.dataTables.js"></script>
+
+    <script src="/admin_assets/vendors/DataTables/media/js/dataTables.bootstrap.js"></script>
+
+    <script src="/admin_assets/vendors/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+
+    <script src="/admin_assets/js/table-datatables.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Blog";
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    TempData["Blog"] = "active";
+}
+
+<section>
+    <div class="container">
+        <div class="row multi-row-clearfix">
+            <div class="blog-posts">
+
+                @foreach (Mutualex.Blog i in ViewBag.Bloglst)
+                {
+
+                    <div class="col-md-6">
+                        <article class="post clearfix mb-30 bg-lighter">
+                            <div class="entry-header">
+                                <div class="post-thumb thumb">
+                                    @if (!string.IsNullOrEmpty(i.MediaUrl))
+                                    {
+                                        <a href="/Blog/BlogDetails/@i.Id">
+                                            <img src="@i.MediaUrl.Replace("~", "")" alt="" class="img-responsive img-fullwidth">
+                                        </a>
+                                    }
+                                    @*@if (i.VideoUrl != null)
+                                    {
+                                        <a href="/Blog/BlogDetails/@i.Id">
+                                            <img src="~/images/play.jpg" class="img-responsive img-fullwidth" style="border: 1px solid #00d2f1" />
+                                        </a>
+                                    }*@
+                                    @if (i.Mediatype == "Youtube")
+                                    {
+                                        <iframe src="@i.VideoUrl.Replace("watch?v=","embed/")" frameborder="0" allowfullscreen height="421" width="780"></iframe>
+                                    }                                    
+                                </div>
+                            </div>
+                            <div class="entry-content p-20 pr-10" style="padding-right: 18px !important">
+                                <div class="entry-meta media mt-0 no-bg no-border">
+                                    <div class="entry-date media-left text-center flip bg-theme-colored pt-5 pr-15 pb-5 pl-15" style="width: 15%">
+                                        <ul>
+                                            <li class="font-14 text-white font-weight-600">@i.OnDate.GetValueOrDefault().ToString("dd MMM")</li>
+                                            <li class="font-12 text-white text-uppercase">@i.OnDate.GetValueOrDefault().ToString("yyyy")</li>
+                                        </ul>
+                                    </div>
+                                    <div class="media-body pl-15">
+                                        <div class="event-content pull-left flip">
+                                            <h4 class="entry-title text-white text-uppercase m-0 mt-5">
+                                                <a href="/Blog/BlogDetails/@i.Id">@i.Title</a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="overflow: hidden; height: 76px; text-align:justify">
+                                    <p class="mt-10">
+                                        @Html.Raw(HttpUtility.HtmlDecode(i.Description))
+                                    </p>
+                                </div>
+                                <a href="/Blog/BlogDetails/@i.Id" class="btn-read-more">Read more</a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </article>
+                    </div>
+
+                }
+
+                @*<div class="col-md-12">
+                    <nav>
+                        <ul class="pagination theme-colored">
+                            <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">«</span> </a> </li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">...</a></li>
+                            <li> <a href="#" aria-label="Next"> <span aria-hidden="true">»</span> </a> </li>
+                        </ul>
+                    </nav>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>

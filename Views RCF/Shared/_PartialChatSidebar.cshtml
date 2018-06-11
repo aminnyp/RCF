@@ -1,0 +1,79 @@
+﻿@*@model Mutualex.Models.property*@
+@using System.Data;
+@using Mutualex.Models;
+@{
+    HttpCookie loginCookie = Request.Cookies["login_cookie"];
+    property p = new property();
+    DataSet ds = new DataSet();
+    DataLayer dl = new DataLayer();
+    p.Condition1 = loginCookie["UserId"].ToString();
+    p.Condition2 = "";
+    p.Condition3 = "";
+    // p.onTable = "GET_CHAT_USERS";//"";
+   //  ds = dl.FETCH_CONDITIONAL_QUERY(p);
+
+    List<property> ChatUsers = new List<property>();
+
+    // foreach (DataRow item in ds.Tables[0].Rows)
+    {
+        property stp = new property();
+        //stp.id = item["id"].ToString();
+        //stp.FullName = item["Name"].ToString();
+        //stp.Comments = item["Comment"].ToString();
+        //stp.ImgURL = item["ImgURL"].ToString().Replace("~", "");
+        //if (item["totURChat"].ToString()=="0")
+        //{ 
+        //    stp.totalJobs = "";
+        //}
+        //else
+        //{
+        //    stp.totalJobs = item["totURChat"].ToString();
+        //}
+        ChatUsers.Add(stp);
+    }
+    ViewBag.ChatUsersList = ChatUsers; //EXISING USERS
+                                       //if (ds.Tables[1].Rows[0]["totURchat"].ToString()!="0")
+                                       //{
+                                       //    ViewBag.totURchat = ds.Tables[1].Rows[0]["totURchat"].ToString();
+                                       //}
+
+
+}
+<div id="chat-form" class="fixed">
+    <div class="chat-inner">
+        <h2 class="chat-header">
+            <a href="javascript:;" class="chat-form-close pull-right">
+                <i class="glyphicon glyphicon-remove"></i>
+            </a>
+            <i class="fa fa-group"></i>&nbsp;
+            Online Users
+            &nbsp;<span class="badge badge-info" id="totURChat2">@ViewBag.totURchat</span>
+        </h2>
+        
+        <div id="chat_users" class="chat-group">
+            <strong>My List</strong>
+            @foreach (Mutualex.Models.property i in ViewBag.ChatUsersList)
+            {
+                <a href="javascript:void(0);" onclick="opnNewChat(this);" data-chat-id="@i.id-@loginCookie.Values["UserId"]" data-client-id="@i.id" data-client-name="@i.FullName" data-img-url="@i.ImgURL" class="ch-a-hm-@i.id user" id="ha_rr_y_@i.id">
+                    <i class="fa fa-circle"></i>
+                    <small> @i.FullName</small>
+                    @*<span class="badge badge-info totURchat">@i.totalJobs</span>*@
+                    <br />
+                    <span class="shrt_msg">@i.Comments</span>
+                </a>
+            }
+        </div>
+        <div id="chat_users_others" class="chat-group">
+            <strong>Other Members</strong>
+        </div>
+    </div>
+</div>
+
+@*<div id="divContainer" style="display: block; position: fixed; bottom: 0px; float: right; text-align: right; right: 0; height: 1px; z-index: 999999;">
+    <input id="hdId" type="hidden" />
+    <input id="hdUserName" type="hidden" />
+</div>*@
+
+<div id="ch_load">
+
+</div>

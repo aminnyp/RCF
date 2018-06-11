@@ -1,0 +1,635 @@
+﻿<!--Reference the SignalR library. -->
+<link href="~/admin_assets/css/ChatStyle.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+
+<script src="/signalr/hubs"></script>
+<script type="text/javascript">
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+        //document.cookie = cname + "=" + cvalue + "; path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+
+</script>
+<script type="text/javascript">
+    var $ = jQuery;
+    $(function () {
+        // Declare a proxy to reference the hub.
+        var chatHub = $.connection.chatHub;
+        registerClientMethods(chatHub);
+        // Start Hub
+        $.connection.hub.start().done(function () {
+            registerEvents(chatHub)
+
+            $.getJSON('/Chat/getusrCookieData/', function (data) {
+                if (data.UserId != '-1') {
+                    var Usrid = data.UserId;
+                    var fullname = data.FullName;
+                    var CntryData = data.Country;
+                    var UserType = data.UserType;
+                   
+                        chatHub.server.connect(fullname + '#' + Usrid + '#' + CntryData);
+                        //set cookie for continual window
+                        //alert(fullname + '#' + Usrid + '#' + CntryData)
+                        try {
+                            var cl_id_cont = getCookie("cl_id_cont");
+                            if (cl_id_cont != "") {
+                                var array = cl_id_cont.split('|');
+                                var arrayLength = parseInt(array.length);
+                                for (i = 0; i < arrayLength; i++) {
+                                    if (array[i] != null && array[i] != "") {
+                                        //alert(array[i]);
+                                        var opnclid = array[i].split('#');
+                                        OpenPrivateChatWindow(chatHub, opnclid[1] + "-" + Usrid, array[i]);
+                                    }
+                                }
+
+                            }
+                        } catch (e) {
+
+                        }
+                   
+                }
+            });
+
+        });
+        setInterval(re_initialize, 60000);
+    });
+
+    function registerEvents(chatHub) {
+
+        $('#btnSendMsg').click(function () {
+
+            var msg = $("#txtMessage").val();
+            if (msg.length > 0) {
+
+                var userName = $('#hdUserName').val();
+                chatHub.server.sendMessageToAll(userName, msg);
+                $("#txtMessage").val('');
+            }
+        });
+
+        $("#txtMessage").keypress(function (e) {
+            if (e.which == 13) {
+                $('#btnSendMsg').click();
+            }
+        });
+
+
+    }
+
+    function registerClientMethods(chatHub) {
+
+        // Calls when user successfully logged in
+        chatHub.client.onConnected = function (id, userName, allUsers, messages) {
+
+            $('#hdId').val(id);
+            $('#hdUserName').val(userName);
+            // $('#spanUser').html(userName);
+
+            // Add All Users
+            for (i = 0; i < allUsers.length; i++) {
+                console.log(allUsers[i].UserName);
+                AddUser(chatHub, allUsers[i].ConnectionId, allUsers[i].UserName);
+            }
+
+            // Add Existing Messages
+            for (i = 0; i < messages.length; i++) {
+
+                AddMessage(messages[i].UserName, messages[i].Message);
+            }
+
+
+        }
+
+        // On New User Connected
+        chatHub.client.onNewUserConnected = function (id, name) {
+
+            AddUser(chatHub, id, name);
+        }
+
+
+        // On User Disconnected
+        chatHub.client.onUserDisconnected = function (id, userName) {
+            var user = getCookie("login_cookie");
+            var cookieData = user;
+            var res = cookieData.split('&');
+            var Usrid = res[0].replace('id=', '');
+
+            $('#' + id).remove();
+
+            var ctrId = 'private_' + id;
+            //$('#' + ctrId).remove();
+            var loffName = userName.split('#');
+            $(".ch-a-hm-" + loffName[1]).attr("data-chat-id", loffName[1] + '-' + Usrid);
+            $(".ch-a-hm-" + loffName[1]).removeClass("chatActive");
+            $(".ch-a-hm-win-" + loffName[1]).attr("data-chat-id", loffName[1] + '-' + Usrid);
+            $(".ch-a-hm-win-" + loffName[1]).attr("id", 'private_' + loffName[1] + '-' + Usrid);
+            $(".ch-a-hm-tex-" + loffName[1]).attr("data-chat-id", loffName[1] + '-' + Usrid);
+            $(".ch-a-hm-btn-" + loffName[1]).attr("data-chat-id", loffName[1] + '-' + Usrid);
+        }
+
+        chatHub.client.messageReceived = function (userName, message) {
+            AddMessage(userName, message);
+        }
+
+
+        chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message, onDate, UserName, attachment) {
+            //alert(windowId);
+            var ctrId = 'private_' + windowId;
+            var cid = $('#' + ctrId).attr('data-client-id');
+            if ($('#' + ctrId).length == 0 && message != 'delx|11|02|90|delx') {
+                createPrivateChatWindow(chatHub, windowId, ctrId, fromUserName);
+            }
+            //var chUName = fromUserName.split('#');
+            var chUName = fromUserName.split('#');
+            var userchk = getCookie("login_cookie");
+            var Usridchk = "";
+            if (userchk != "") {
+                var cookieData = userchk;
+                var res = cookieData.split('&');
+                Usridchk = res[0].replace('id=', '');
+            }
+            if (message == 'delx|11|02|90|delx') {
+                message = "User deleted from your chat list.";
+                $('#' + ctrId).attr('data-chat-state', '-404');
+                try {
+                    //var res = str.replace(/blue/g, "red");
+                    var cl_id_cont = getCookie("cl_id_cont");
+                    if (cl_id_cont != "") {
+                        var delUID = chUName[0] + "#" + chUName[1];
+                        cl_id_cont = cl_id_cont.replace("|" + delUID, "").replace(delUID, "");
+                        setCookie("cl_id_cont", cl_id_cont, 1);
+                    }
+                } catch (e) {
+
+                }
+                $('#ha_rr_y_' + chUName[1]).remove();
+            }
+            else {
+            }
+                //alert(ctrId)
+                if (attachment == null || attachment == '') {
+                    if (Usridchk == chUName[1]) {
+                        $('#' + ctrId).find('#divMessage_' + cid).append('<div class="message"><span class="userName">' + chUName[0] + '</span>: ' + message + '<br/><span class="chat-date">' + onDate + '</span></div>');
+                    }
+                    else {
+                        var cid2 = $('#' + ctrId).attr('data-client-id');
+                        $('#' + ctrId).find('#divMessage_' + cid).append('<div class="message replay"><span class="userName">' + chUName[0] + '</span>: ' + message + '<br/><span class="chat-date">' + onDate + '</span></div>');
+                        //document.title = chUName[0] + ': ' + message;
+                    }
+                }
+                else {
+                    if (Usridchk == chUName[1]) {
+                        $('#' + ctrId).find('#divMessage_' + cid).append('<div class="message"><span class="userName">' + chUName[0] + '</span>: ' + message + ' <a href="' + attachment + '" download><img src="/css/attachment.png" style="width:16px;" /></a><br/><span class="chat-date">' + onDate + '</span></div>');
+                    }
+                    else {
+                        var cid2 = $('#' + ctrId).attr('data-client-id');
+                        $('#' + ctrId).find('#divMessage_' + cid).append('<div class="message replay"><span class="userName">' + chUName[0] + '</span>: ' + message + ' <a href="' + attachment + '" download><img src="/css/attachment.png" style="width:16px;" /></a><br/><span class="chat-date">' + onDate + '</span></div>');
+                        //document.title = chUName[0] + ': ' + message;
+                    }
+                }
+
+
+                // set scrollbar
+                var height = $('#' + ctrId).find('#divMessage_' + cid)[0].scrollHeight;
+                $('#' + ctrId).find('#divMessage_' + cid).scrollTop(height);
+
+        }
+
+    }
+
+    function AddUser(chatHub, id, name) {
+        var userId = $('#hdId').val();
+        var unID = $('#hdUserName').val();
+        var GlobUName = name.split('#');
+        var regunID = unID.split('#');
+        var code = "";
+        if (userId == id || regunID[1]==GlobUName[1]) {
+            //code = $('<div class="loginUser">' + GlobUName[0] + "</div>");
+        }
+        else {
+            code = $('<a href="javascript:void(0);" onclick="opnNewChat(this);" data-chat-id="' + id + '" data-client-id="' + GlobUName[1] + '" data-client-name="' + GlobUName[0] + '" data-img-url="" class="ch-a-hm-' + GlobUName[1] + ' user" id="ha_rr_y_' + GlobUName[1] + '">' +
+                    '<i class="fa fa-circle"></i><small> ' + GlobUName[0] + '</small><br/><span class="shrt_msg"></span></a>');
+            if (!$(".ch-a-hm-" + GlobUName[1]).length)
+            {
+                $("#chat_users_others").append(code);
+            }
+            $(".ch-a-hm-" + GlobUName[1]).attr("data-chat-id", id);
+            $(".ch-a-hm-" + GlobUName[1]).addClass("user chatActive");
+
+            try {
+                $(".ch-a-hm-win-" + GlobUName[1]).attr("data-chat-id", id);
+                $(".ch-a-hm-tex-" + GlobUName[1]).attr("data-chat-id", id);
+                $(".ch-a-hm-btn-" + GlobUName[1]).attr("data-chat-id", id);
+                $(".ch-a-hm-win-" + GlobUName[1]).attr("id", 'private_' + id);
+            } catch (e) {
+
+            }
+        }
+
+        //$("#divusers").append(code);
+
+    }
+
+
+
+    function AddMessage(userName, message) {
+        //$('#divChatWindow').append('<div class="message"><span class="userName">' + userName + '</span>: ' + message + '</div>');
+
+        //var height = $('#divChatWindow')[0].scrollHeight;
+        //$('#divChatWindow').scrollTop(height);
+    }
+
+    function OpenPrivateChatWindow(chatHub, id, userName) {
+        var ctrId = 'private_' + id;
+        if ($('#' + ctrId).length > 0)
+            return;
+
+        $('#ch_load').css('display', 'block');
+        $('#ch_load').fadeOut();
+        createPrivateChatWindow(chatHub, id, ctrId, userName);
+    }
+
+
+    function createPrivateChatWindow(chatHub, userId, ctrId, userName) {
+        //alert("userId:" + userId + "; " + "ctrId:" + ctrId + "; " + "userName:" + userName);
+
+        var prech_res = userName.split('#');
+        var preChat = "";
+        var div = "";
+        var myElem = document.getElementById(ctrId);
+        if (myElem == null) {
+            $.getJSON('/Chat/preChatList/' + prech_res[1], function (data) {
+                if (myElem == null) {
+
+                    //extra work
+                    $.each(data, function (i, ChatList) {
+                        if (ChatList.FileURL == null || ChatList.FileURL == '') {
+                            if (ChatList.FromUserID == prech_res[0]) {
+                                preChat += '<div class="ch_message replay"><span class="userName">' + ChatList.FromUserID + '</span>: ' + ChatList.Comments + '<br/>' +
+                                '<span class="chat-date">' + ChatList.onDate + '</span></div>';
+                            }
+                            else {
+                                preChat += '<div class="ch_message"><span class="userName">' + ChatList.FromUserID + '</span>: ' + ChatList.Comments + '<br/>' +
+                                        '<span class="chat-date">' + ChatList.onDate + '</span></div>';
+                            }
+                        }
+                        else {
+                            if (ChatList.FromUserID == prech_res[0]) {
+                                preChat += '<div class="ch_message replay"><span class="userName">' + ChatList.FromUserID + '</span>: ' + ChatList.Comments + ' <a href="' + ChatList.FileURL + '" download><img src="/admin_assets/images/attachment.png" style="width:16px;" /></a><br/>' +
+                                '<span class="chat-date">' + ChatList.onDate + '</span></div>';
+                            }
+                            else {
+                                preChat += '<div class="ch_message"><span class="userName">' + ChatList.FromUserID + '</span>: ' + ChatList.Comments + ' <a href="' + ChatList.FileURL + '" download><img src="/admin_assets/images/attachment.png" style="width:16px;" /></a><br/>' +
+                                        '<span class="chat-date">' + ChatList.onDate + '</span></div>';
+                            }
+                        }
+
+                    });
+
+                    //extra work
+                    //alert(preChat);
+                    div += '<div id="' + ctrId + '" data-chat-id="' + ctrId.replace('private_', '') + '" class="ch-a-hm-win-' + prech_res[1] + ' ui-widget-content draggable" data-client-id="' + prech_res[1] + '" data-chat-state="" rel="0">' +
+                           '<div class="header">' +
+                              '<div  style="float:right;">' +
+                              '<img id="min_min_' + prech_res[1] + '" data-client-id="' + prech_res[1] + '" class="ch-a-hm-tex-' + prech_res[1] + ' max" data-chat-id="' + ctrId.replace('private_', '') + '" style="cursor:pointer;" src="/admin_assets/images/min-min.png" onclick="min_min_chatbox(this)" /> &nbsp;&nbsp;' +
+                                  '<img id="imgDelete" class="ch-a-hm-tex-' + prech_res[1] + '" data-chat-id="' + ctrId.replace('private_', '') + '" data-chat-name="' + prech_res[0] + '" style="cursor:pointer;" src="/admin_assets/images/delete.png"/ onclick="closechatbox(this)">' +
+                               '</div>';
+                    //div += '<span class="selText" rel="0"><i class="ch-a-hm-' + prech_res[1] + ' fa fa-circle chatActive"></i>' + prech_res[0] + '</span></div>';
+                    if ($('#ha_rr_y_' + prech_res[1]).hasClass('chatActive')) {
+                        div += '<span class="selText" rel="0"><i class="ch-a-hm-' + prech_res[1] + ' fa fa-circle chatActive"></i> ' + prech_res[0] + '</span></div>';
+                    }
+                    else {
+                        div += '<span class="selText" rel="0"><i class="ch-a-hm-' + prech_res[1] + ' fa fa-circle"></i> ' + prech_res[0] + '</span></div>';
+                    }
+
+                    div += '<div id="divMessage_' + prech_res[1] + '" class="messageArea">';
+
+                    div += preChat + '</div>' +
+                                   '<div class="buttonBar" id="btmsendsec_' + prech_res[1] + '">' +
+                                      '<input id="txtPrivateMessage_' + prech_res[1] + '" class="ch-a-hm-tex-' + prech_res[1] + ' msgText" type="text" data-chat-id="' + ctrId.replace('private_', '') + '"  onkeyup="sendMSGkey_up(event,this);" maxlength="300"/>' +
+                                      '<div class="btn-group dropup"><button id="btnSendMessage" class="btn btn-primary btn-sm ch-a-hm-btn-' + prech_res[1] + '" type="button" value="Send" data-client-id=' + prech_res[1] + ' data-chat-id="' + ctrId.replace('private_', '') + '" onClick="sendMSGFunction(this)">Send</button>' +
+                                      //'<button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu pull-right">' +
+                                      //'<li><a href="javascript:void(0)" onclick="Export_in_email(' + prech_res[1] + ')">Export in email</a></li>' +
+                                      //'<li class="divider"></li>' +
+                                      //'<li><a href="javascript:void(0)" onclick="Delete_chat_user(' + prech_res[1] + ')">Delete User</a></li>' +
+                                       //'<li class="divider"></li>' +
+                                      //'<li><a href="javascript:void(0)" onclick="Delete_chat_data(' + prech_res[1] + ')">Delete Chat Data</a></li></ul></div>' +
+                                      //'<input id="btnSendMessage" class="ch-a-hm-btn-' + prech_res[1] + ' submitButton button" type="button" value="Send" data-client-id=' + prech_res[1] + ' data-chat-id="' + ctrId.replace('private_', '') + '" onClick="sendMSGFunction(this)" />' +
+                                      '<div id="ch_user_loader"><img src="/admin_assets/images/loading.gif" /></div>' +
+                                   '</div>' +
+                                '</div>';
+
+
+                    var $div = $(div);
+
+                    AddDivToContainer($div);
+
+                    // set scrollbar
+                    var height = $('#' + ctrId).find('#divMessage_' + prech_res[1])[0].scrollHeight;
+                    $('#' + ctrId).find('#divMessage_' + prech_res[1]).scrollTop(height);
+
+                    //totURchat total unread chat counter
+                    var utotURchat = $('#ha_rr_y_' + prech_res[1] + ' .totURchat').html();
+                    if (utotURchat != '' && utotURchat != null) {
+                        var totURchat = $('#totURChat').html();
+                        var remtotURchat = parseInt(totURchat) - parseInt(utotURchat);
+                        if (remtotURchat > 0) {
+                            $('#totURChat').html(remtotURchat);
+                            $('#totURChat2').html(remtotURchat);
+                        }
+                        else {
+                            $('#totURChat').html('');
+                            $('#totURChat2').html('');
+                        }
+                    }
+                    $('#ha_rr_y_' + prech_res[1] + ' .totURchat').html('');
+                    //set cookie for continual window
+                    try {
+                        var cl_id_cont = getCookie("cl_id_cont");
+                        var cokuserName = userName.split('#');
+                        if (cl_id_cont != "") {
+                            var array = cl_id_cont.split('|');
+                            var arrayLength = parseInt(array.length);
+                            var trCount = 0;
+                            for (i = 0; i < arrayLength; i++) {
+                                if (array[i] != null && array[i] != "") {
+                                    if (array[i] == cokuserName[0] + '#' + cokuserName[1]) {
+                                        trCount = 1;
+                                    }
+                                }
+                            }
+                            if (trCount == 0) {
+                                cl_id_cont = cl_id_cont + "|" + cokuserName[0] + '#' + cokuserName[1];
+                                setCookie("cl_id_cont", cl_id_cont, 1);
+                            }
+                        } else {
+                            cl_id_cont = cokuserName[0] + '#' + cokuserName[1];
+                            setCookie("cl_id_cont", cl_id_cont, 1);
+                        }
+                    } catch (e) {
+
+                    }
+                    re_initialize();
+                }
+            });
+        }
+    }
+
+    function re_initialize() {
+        var chatHub = $.connection.chatHub;
+        registerClientMethods(chatHub);
+        // Start Hub
+        //alert();
+        $.connection.hub.start().done(function () {
+            registerEvents(chatHub);
+            $.getJSON('/Chat/getusrCookieData/', function (data) {
+                console.log(data);
+                if (data.UserId != '-1') {
+                    var Usrid = data.UserId;
+                    var fullname = data.FullName;
+                    var CntryData = data.Country;
+                    var Usertype = data.UserType;
+                    console.log(Usertype);
+                    chatHub.server.connect(fullname + '#' + Usrid + '#' + CntryData +'#' +Usertype);
+                };
+            });
+        });
+    }
+
+    //HM custom send message
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+
+    function opnNewChat(t) {
+        //$(this).off(t);
+        var userId = $('#hdId').val();
+        var chatHub = $.connection.chatHub;
+        var id = $(t).attr('data-chat-id');
+        var clid = $(t).attr('data-client-id');
+        var clfname = $(t).attr('data-client-name');
+        //alert(userId+'--Harry--'+id)
+
+        if (userId != id) {
+            OpenPrivateChatWindow(chatHub, id, clfname + '#' + clid);
+            //sleep(3000);
+        }
+
+    }
+
+    function sendMSGFunction(t) {
+        var chatHub = $.connection.chatHub;
+        var clid = $(t).attr('data-client-id');
+        var delkey = $('.ch-a-hm-win-'+clid).attr('data-chat-state'); //-404 for delete
+        //alert(clid)
+        $textBox = $('#txtPrivateMessage_' + clid);
+        var ch_chat = $(t).attr('data-chat-id');
+        var msg = $textBox.val();
+        //alert(msg)
+        if (delkey == '-404') {
+            alert('User deleted from your chat list. You cant send message to this user.')
+        }
+        else {
+            if (msg.length > 0) {
+                chatHub.server.sendPrivateMessage(ch_chat, msg, '');
+                $textBox.val('');
+            }
+        }
+    }
+
+    function sendMSGkey_up(evt, t) {
+        var chatHub = $.connection.chatHub;
+        var ccid = $(t).attr('data-chat-id');
+        var delkey = $('#private_' + ccid).attr('data-chat-state'); //-404 for delete
+        //alert(clid)
+        var msg = t.value;
+        if (evt.keyCode == 13) {
+            if (delkey == '-404') {
+                alert('User deleted from your chat list. You cant send message to this user.')
+            }
+            else {
+                if (msg.length > 0) {
+                    chatHub.server.sendPrivateMessage(ccid, msg, '');
+                    t.value = '';
+                }
+            }
+        }
+    }
+
+    function closechatbox(t) {
+        var ccid = $(t).attr('data-chat-id');
+        var ccName = $(t).attr('data-chat-name');
+        $('#private_' + ccid).remove();
+
+        //remove cookie for continual window
+        try {
+            //var res = str.replace(/blue/g, "red");
+            var cl_id_cont = getCookie("cl_id_cont");
+            if (cl_id_cont != "") {
+                var cr_id = $(t).attr('class');
+                var arrCCid = cr_id.replace('ch-a-hm-tex-', '');
+                var delUID = ccName + "#" + arrCCid;
+
+                cl_id_cont = cl_id_cont.replace("|" + delUID, "").replace(delUID, "");
+                setCookie("cl_id_cont", cl_id_cont, 1);
+            }
+        } catch (e) {
+
+        }
+    }
+
+    function min_min_chatbox(t) {
+        var cid = $(t).attr('data-client-id');
+        var ccid = $(t).attr('data-chat-id');
+        if ($('#min_min_' + cid).hasClass("max")) {
+            $('#min_min_' + cid).addClass("min");
+            $('#min_min_' + cid).removeClass("max");
+            $('#divMessage_' + cid).css("display", "none");
+            $('#btmsendsec_' + cid).css("display", "none");
+            $('#private_' + ccid).css("top", "-35px");
+        }
+        else {
+            $('#min_min_' + cid).removeClass("min");
+            $('#min_min_' + cid).addClass("max");
+            $('#divMessage_' + cid).css("display", "block");
+            $('#btmsendsec_' + cid).css("display", "block");
+            $('#private_' + ccid).css("top", "-361px");
+        }
+    }
+
+    function AddDivToContainer($div) {
+        $('#divContainer').prepend($div);
+        $div.draggable({
+            handle: ".header",
+            stop: function () {
+
+            }
+        });
+    }
+
+    function searchChatUsers() {
+        var usrList = "<ul>";
+        $.getJSON('/Chat/searchChatUsers/' + $('#ch_CatList').val() + '/' + $('#ch_Search').val(), function (data) {
+            $.each(data, function (i, uList) {
+                usrList+=" <li><p>"+
+                '<img src="' + uList.ImgURL + '" class="avt">' +
+                                '<span class="user">' + uList.FullName + '</span>' +
+                                '<span class="time" id="sndreq_' + uList.id + '"><a href="javascript:void(0);" onclick="sendChatRequest(' + uList.id + ');" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" data-original-title="Send Chat Request"><i class="fa fa-send-o"></i> Send</a></span>' +
+                                //'<div class="ch_utype">' + uList.UserType + '</div>' +
+                            '</p>'+
+                        '</li>';
+            });
+            usrList += "</ul>";
+            $('#ch_filter_list').html(usrList);
+        });
+    }
+
+    function sendChatRequest(t)
+    {
+        $.getJSON('/Chat/sendChatRequest/' + t, function (data) {
+            if(data=='Done')
+            {
+                $('#sndreq_' + t).html('<span class="label label-default"><i class="fa fa-check"></i> Sent</span>');
+            }
+            else if (data == 'ALREADY EXISTS') {
+                $('#sndreq_' + t).html('<span class="label label-default"><i class="fa fa-check"></i> Sent</span>');
+                alert("Request already exists.");
+            }
+            else {
+                alert(data);
+            }
+        });
+
+    }
+
+    function action_ChatReq(t, act)
+    {
+        $.getJSON('/Chat/action_ChatReq/' + t + '/' + act, function (data) {
+            if (data == 'Done') {
+                location.reload();
+            }
+            else {
+                alert(data);
+            }
+        });
+    }
+
+    function Export_in_email(clID) {
+        if (clID != null) {
+            $('.ch-a-hm-win-' + clID + ' #ch_user_loader').css("display", "block");
+            $.getJSON('/Chat/Export_in_email/' + clID, function (data) {
+                alert(data);
+                $('.ch-a-hm-win-' + clID + ' #ch_user_loader').css("display", "none");
+            });
+        }
+    }
+
+    function Delete_chat_user(clID) {
+      
+        if (clID != null) {
+            $('.ch-a-hm-win-' + clID + ' #ch_user_loader').css("display", "block");
+            var chatHub = $.connection.chatHub;
+            var ccid = $('.ch-a-hm-win-' + clID).attr('data-chat-id');
+            $.getJSON('/Chat/Delete_chat_user/' + clID, function (data) {
+                if (data == "User deleted successfully and Chat transcript sent to both users.") {
+                    //$('.ch-a-hm-win-'+clID).remove();
+                    $('.ch-a-hm-win-' + clID).find('#imgDelete').click();
+                    $('.ch-a-hm-' + clID).remove();
+                    chatHub.server.sendPrivateMessage(ccid, 'delx|11|02|90|delx', '');
+                }
+                alert(data);
+                //$('.ch-a-hm-win-' + clID + ' #ch_user_loader').css("display", "none");
+            });
+        }
+    }
+
+    function Delete_chat_data(clID) {
+        if (clID != null) {
+            $('.ch-a-hm-win-' + clID + ' #ch_user_loader').css("display", "block");
+            var chatHub = $.connection.chatHub;
+            var ccid = $('.ch-a-hm-win-'+clID).attr('data-chat-id');
+            $.getJSON('/Chat/Delete_chat_data/' + clID, function (data) {
+                if (data == "Chat transcript deleted successfully and Chat transcript sent to both users.") {
+                    $('#divMessage_'+clID).html('');
+                    chatHub.server.sendPrivateMessage(ccid, 'Chat transcript deleted.', '');
+                }
+                alert(data);
+                $('.ch-a-hm-win-' + clID + ' #ch_user_loader').css("display", "none");
+            });
+        }
+    }
+    $(function () {
+        $('#totURChat').html($('#totURChat2').html());
+    });
+</script>
+
+
+<div id="divContainer" style="display: block; position: fixed; bottom: 0px; float: right; text-align: right; right: 0; height: 1px; z-index: 99999;">
+    <input id="hdId" type="hidden" />
+    <input id="hdUserName" type="hidden" />
+</div>
+
+<div id="ch_load">
+
+</div>
+

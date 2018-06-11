@@ -1,0 +1,252 @@
+﻿@model Mutualex.About
+@{
+    RNMediaEntities db = new RNMediaEntities();
+
+    ViewBag.Title = "Donate Now";
+
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //TempData["About"] = "active";
+}
+
+<!-- Divider: Make a Donation -->
+<section class="cstm-parallax" data-bg-img="images/bg/bg2.jpg">
+    <div class="container pt-0 pb-0">
+        <div class="row" style="padding: 36px">
+            <div class="col-md-12">
+                <div class="bg-light-blue p-40" style="border-radius: 10px;">
+                    <h3 class="mt-0 line-bottom" style="color:#000000;">Make a Donation<span class="font-weight-300"> Now!</span></h3>
+
+                    <!-- ===== START: Paypal Both Onetime/Recurring Form ===== -->
+
+                    <div class="row orn">
+
+                        <div class="col-md-12">
+                            @*<img src="images/payment-card-logo-sm.png" alt="">*@
+                            <div class="form-group mt-20 mb-20">
+                                <label><strong>Payment Type</strong></label> <br>
+                                <label class="radio-inline">
+                                    <input type="radio" checked="" value="One-time" name="payment_type">
+                                    One Time
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="Recurring" name="payment_type">
+                                    Recurring
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" id="donation_type_choice">
+                            <div class="form-group mb-20">
+                                <label><strong>Donation Type</strong></label>
+                                <div class="radio mt-5">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="Daily" name="t3" checked="">
+                                        Daily
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="Weekly" name="t3">
+                                        Weekly
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="Monthly" name="t3">
+                                        Monthly
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="Yearly" name="t3">
+                                        Yearly
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 val0">
+                            <div class="form-group mb-20">
+                                <label><strong class="btt">I Want to Donate for</strong></label>
+                                <select id="DonateFor" name="item_name" class="form-control">
+                                    <option value="">---SELECT---</option>
+                                    <option  value="Food for Victims">Food for Victims</option>
+                                    <option value="Help for Medication">Help for Medication</option>
+                                    <option  value="Water for Life">Water for Life</option>
+                                    <option  value="Nutrition is life">Nutrition is life</option>
+                                    <option value="Educate Children">Educate Children</option>
+                                    <option value="Help to Provide Tent">Help to Provide Tent</option>
+                                    <option value="Social Awareness">Nutrition is life</option>                                   
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 val0">
+                            <div class="form-group mb-20">
+                                <label ><strong>Currency</strong></label>
+                                <select name="currency_code" class="form-control">
+                                    <option value="">---SELECT---</option>
+                                    <option value="AUD">AUD - Australian Dollars</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group mb-20">
+                                <label><strong>How much do you want to donate?</strong></label>
+                                <div class="radio mt-5">
+                                    <label class="radio-inline">
+                                        <input type="radio" id="amount1" name="amount" value="20" checked="checked" onclick="CustomAmountHide(); Amount1();">
+                                        $20
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" id="amount2" name="amount" value="50" onclick="CustomAmountHide(); Amount2();">
+                                        $50
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" id="amount3" name="amount" value="100" onclick="CustomAmountHide(); Amount3();">
+                                        $100
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" id="amount4" name="amount" value="200" onclick="CustomAmountHide(); Amount4();">
+                                        $200
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" id="amount5" name="amount" value="500" onclick="CustomAmountHide(); Amount5();">
+                                        $500
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="amount" value="other" onclick="CustomAmount()">
+                                        Other Amount
+                                    </label>
+                                </div>
+                                <div>
+                                    <label id="custLbl" style="display:none"><strong>Custom Amount:</strong></label>
+                                    <input id="custom" name="name" onkeyup="CustomsAmount()" value="" style="width: 30%; display: none; padding: 6px" type="number" placeholder="Custom Amount" required>
+                                </div>
+                                <input id="finalAmount" type="text" value="20" style="display:none" />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" style="padding-bottom:12px">
+                            <input type="checkbox" name="Doner" value="Donation" style="margin: 5px 0 0" onclick="DonerDetails()"><b> Donor Details</b><br>
+                        </div>
+
+                        <div id="DonrDetls" style="display: none; margin-bottom: 35px !important; margin-top: 12px" class="form-group mb-20 val0">
+                            <div class="col-sm-4">
+                                <label><strong class="btt">Name</strong></label>
+                                <input type="text" class="form-control" value="" placeholder="Full Name" id="Name" style="color: #c09541 !important" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label><strong class="btt">Email</strong></label>
+                                <input type="text" class="form-control" value="" placeholder="Email Address" id="Email" style="color: #c09541 !important" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label><strong class="btt">Contact No</strong></label>
+                                <input type="text" class="form-control" value="" placeholder="Contact Number" id="ContNo" style="color: #c09541 !important" />
+                            </div>
+                            <br /><br />
+                        </div>
+
+                        <div class="col-sm-12" style="padding-top: 20px">
+                            <div class="form-group">
+                                <button type="submit" onclick="Donation()" class="btn btn-flat btn-dark btn-theme-colored mt-10 pl-30 pr-30" data-loading-text="Please wait..." style="padding: 7px 22px">Donate Now</button>
+                                <img src="/images/payment-paypal.png" alt="PayPal" style="padding-top: 10px">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== END: Paypal Both Onetime/Recurring Form ===== -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    //function CustomAmount() {
+
+    //    document.getElementById('custLbl').style.display = "block";
+    //    document.getElementById('custom').style.display = "block";
+
+    //}
+
+    //function CustomAmountHide() {
+
+    //    document.getElementById('custLbl').style.display = "none";
+    //    document.getElementById('custom').style.display = "none"
+
+    //}
+
+    //function Amount1() {
+    //    amnt = document.getElementById('amount1').value;
+    //    document.getElementById('finalAmount').value = amnt;
+    //}
+
+    //function Amount2() {
+    //    amnt = document.getElementById('amount2').value;
+    //    document.getElementById('finalAmount').value = amnt;
+    //}
+
+    //function Amount3() {
+    //    amnt = document.getElementById('amount3').value;
+    //    document.getElementById('finalAmount').value = amnt;
+    //}
+
+    //function Amount4() {
+    //    amnt = document.getElementById('amount4').value;
+    //    document.getElementById('finalAmount').value = amnt;
+    //}
+
+    //function Amount5() {
+    //    amnt = document.getElementById('amount5').value;
+    //    document.getElementById('finalAmount').value = amnt;
+    //}
+
+    //function CustomsAmount() {
+    //    amnt = document.getElementById('custom').value;
+    //    document.getElementById('finalAmount').value = amnt;
+    //}
+
+    function DonerDetails() {
+
+        //alert("helloo..");
+
+        if (document.getElementById('DonrDetls').style.display == "none") {
+            document.getElementById('DonrDetls').style.display = "block"
+        }
+        else {
+            document.getElementById('DonrDetls').style.display = "none";
+        }
+
+    }
+
+    //function Donation() {
+
+
+
+    //    var Amount = document.getElementById('finalAmount').value;
+
+    //    var Name = document.getElementById('Name').value;
+
+    //    var Email = document.getElementById('Email').value;
+
+    //    var ContactNo = document.getElementById('ContNo').value;
+
+    //    var DonationFor = document.getElementById('DonateFor').value;
+
+    //    var Ptype = $('input[name=payment_type]:checked').val();
+    //    var dtype = $('input[name=t3]:checked').val();
+
+    //    if (Name == "" || Name == null) {
+    //        Name = "Not Disclosed!";
+    //        Email = "Not Disclosed!";
+    //        ContactNo = "Not Disclosed!";
+    //    }
+
+    //    window.location = '/Home/DonationPaypal?amount=' + Amount + "&name=" + Name + "&email=" + Email + "&cont=" + ContactNo + "&DonateFor=" + DonationFor + "&ptype=" + Ptype + "&dtype=" + dtype;
+
+    //}
+</script>
+

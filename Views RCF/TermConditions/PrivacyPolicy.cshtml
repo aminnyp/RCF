@@ -1,0 +1,19 @@
+﻿@model Mutualex.PrivacyPolicy
+@{
+    ViewBag.Title = "Privacy Policy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>@Model.Title</h2>
+                <p>@Html.Raw(HttpUtility.HtmlDecode(Model.PrivacyPolicy1))</p>
+                    
+            </div>
+        </div>
+    </div>
+</section>
+

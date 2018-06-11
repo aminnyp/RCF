@@ -1,0 +1,186 @@
+﻿@model Mutualex.AttandenceMaster
+@{
+    ViewBag.Title = "Take Attendance";
+    //Layout = null;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    TempData["Attendance"] = "class=" + "active";
+
+    TempData["GiveAttendance"] = "class=" + "active";
+
+    TempData["PageTitle"] = "Take Attendance";
+
+}
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong id="msg">@TempData["MSG"]</strong>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-blue">
+                <div class="panel-heading">
+                    Take Attendance
+
+                </div>
+
+                <div class="panel-body pan">
+                    @*@using (Html.BeginForm("GiveAttendance", "Attendance", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal" }))
+                        {*@
+                    <div class="form-body pal">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Choose Meeting</label>
+                                    @Html.DropDownListFor(model => model.AttendanceFor,
+                                        new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Text="---SELECT---", Value=""},
+                                            new SelectListItem { Text="Weekly Meeting", Value="Weekly Meeting"},
+                                            new SelectListItem { Text="Monthly Meeting", Value="Monthly Meeting"},
+                                             new SelectListItem { Text="Yearly Meeting", Value="Yearly Meeting"},
+                                             new SelectListItem { Text="Special General Meeting", Value="Special General Meeting"},
+                                             //new SelectListItem { Text="May", Value="May"},
+                                             //new SelectListItem { Text="June", Value="June"},
+                                             //new SelectListItem { Text="July", Value="July"},
+                                             //new SelectListItem { Text="August", Value="August"},
+                                             //new SelectListItem { Text="September", Value="September"},
+                                             //new SelectListItem { Text="October", Value="October"},
+                                             //new SelectListItem { Text="November", Value="November"},
+                                             //new SelectListItem { Text="December", Value="December"}
+                                        }
+                                        , new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="input-date">Date:</label>
+                                    @Html.TextBoxFor(model => model.DateFor_Attendance, new { @id = "Date", @type = "date", @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        @*<div class="form-group">
+                                <div class="col-md-3">
+                                    <input id="Submit1" type="submit" class="btn btn-success " value="SUBMIT" />
+
+                                </div>
+                            </div>*@
+
+                    </div>
+
+                    @*}*@
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="portlet box panel panel-grey">
+                        <div class="panel-heading">
+                            Member List
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row mbm">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table id="table_id" class="table table-hover table-striped table-bordered tablesorter">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Image</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Attendance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (Mutualex.Membership_reg i in ViewBag.Members)
+                                                {
+                                                    <tr>
+
+
+                                                        @if (!string.IsNullOrEmpty(i.ImgUrl))
+                                                        {
+                                                            <td><img src="@i.ImgUrl.Replace("~", "")" style="height:85px;" /></td>
+                                                        }
+
+                                                        <td>@i.FirstName @i.LastName</td>
+                                                        <td>
+                                                            @*<a href="/Gallery/Add/@i.id" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i>&nbsp; Edit</a>*@
+                                                            @i.EmailID
+                                                        </td>
+                                                        <td>@i.ContactNo</td>
+                                                        <td>
+                                                            <input type="radio" @*id="id_@i.Srno"*@ name="attn" onclick="attendance('@i.Srno','Present');" value="Present" /> Present
+                                                            <input type="radio" @*id="id_@i.Srno"*@ name="attn" onclick="attendance('@i.Srno','Absent');" value="Absent" /> Absent
+                                                            <input type="radio" @*id="id_@i.Srno"*@ name="attn" onclick="attendance('@i.Srno','Tardy');" value="Tardy" /> Tardy
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+<script src="/admin_assets/js/jquery-1.10.2.min.js"></script>
+<script>
+    //$('#btnpayment').click(function () {
+
+    //    alert('execute');
+    //    $.getJSON('/Admin/Genpaymentlnk', { trnsid: $('#transactionID').val() }, function (data) {
+
+    //    });
+    //});
+    //$(".iradio_minimal-grey").bind('cssClassChanged', function () {
+    //    //do stuff here
+    //    alert();
+    //});
+
+
+
+    //$("td").click(function () {
+    //    alert();
+    //    $(this).find('input:radio').attr('checked', true);
+    //});
+    function attendance(Srno, status) {
+
+        var memberid = Srno;
+        var Attend_Stat = status;
+        var month = $('#AttendanceFor').val();
+        var date = $('#Date').val();
+        //alert(date);
+        $.getJSON('/Attendance/Attend', { Mem_id: memberid, Stat: Attend_Stat, Mon: month, Date: date }, function (data) {
+
+            console.log(data);
+            alert(data);
+        });
+        //var id = document.getElementById("id_" + Srno).value;
+        //alert(id);
+
+
+
+    }
+
+    //$(document).ready(function()
+    //{
+    //    alert();
+    //    $('td>div>input[type=radio]').change( function() { alert("test"); });
+    //});
+</script>

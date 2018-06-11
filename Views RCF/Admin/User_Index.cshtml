@@ -1,0 +1,332 @@
+﻿@{
+    ViewBag.Title = "User Home";
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
+
+    TempData["Dashboard1"] = "class=" + "active";
+    TempData["PageTitle"] = "Dashboard";
+}
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<!--BEGIN CONTENT-->
+<div class="page-content" style="min-height: 505px">
+    <div id="tab-general">
+
+        <div id="sum_box" class="row text-center" @*style="padding: 130px"*@>
+            <h4 style="text-align: center; font-size: 50px">Welcome To</h4>
+            @*<img src="http://demo20.gowebbi.com/images/2016-08-29.png"  style="height:110px;"/>*@
+            <img src="/images/2016-12-20.png" alt="" style="height:175px;margin-left:-213px;"><span style="color:black;font-size:21px;"><b>Rohingya</b></span>&nbsp;<span style="color:red;font-size:21px;"><b>Crisis</b></span>&nbsp;<span style="color:green;font-size:21px;"><b>Foundation</b></span>
+            @*<h3>Admin</h3>*@
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+          
+            <div class="mtm mbm"></div>
+            <div class="scroll">
+
+                <ul style="background: #fff" class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#">Buddy Online</a></li>
+
+                    <li style="margin-top:-7px;">
+                        <a href="#">
+                            <i class="fa fa-circle text-yellow pull-right"></i>Home
+                        </a>
+                    </li>
+                    <li style="margin-top:-7px;"><a href="#"><i class="fa fa-circle text-success pull-right"></i>Work</a></li>
+                    <li style="margin-top:-7px;"><a href="#"><i class="fa fa-circle text-red pull-right"></i>Family</a></li>
+                    <li style="margin-top:-7px;"><a href="#"><i class="fa fa-circle text-muted pull-right"></i>Other</a></li>
+
+                </ul>
+            </div>
+        </div><div class="col-sm-9 col-md-10">
+            <div class="compose-mail">
+                <div class="portlet box portlet-white">
+                    <div class="portlet-header">
+                        <div class="caption">Message</div>
+                        @*<div class="tools"><a onclick="$(this).hide(); $('#cc').parent().parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;" class="mrm">Cc</a><a onclick="$(this).hide(); $('#bcc').parent().parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a></div>*@
+                    </div>
+
+
+                    <div class="portlet-body">
+                        <form role="form-horizontal" method="post">
+
+
+
+
+                            <div class="compose-editor mbl" style="border:1px solid">
+                                <p>Hi Hi Hi Hi Hi Hi :Pritisagar</p>
+                                
+                                @*<textarea rows="6" class="wysihtml5 form-control" style="display: none;"></textarea><input type="hidden" name="_wysihtml5_mode" value="1"><iframe class="wysihtml5-sandbox" security="restricted" allowtransparency="true" frameborder="0" width="0" height="0" marginwidth="0" marginheight="0" style="background-color: rgb(255, 255, 255); border-collapse: separate; border-color: rgb(229, 229, 229); border-style: solid; border-width: 1px; clear: none; display: block; float: none; margin: 0px; outline: rgb(85, 85, 85) none 0px; outline-offset: 0px; padding: 6px 12px; position: static; z-index: auto; vertical-align: baseline; text-align: start; box-shadow: none; border-radius: 0px; width: 847.5px; height: 134px; top: auto; left: auto; right: auto; bottom: auto;"></iframe>*@
+                            </div>
+                            @*<textarea rows="4" cols="50" name="comment" form="usrform"></textarea>*@
+                            <input type="text" id="msg" style="width:850px;height:30px;" />
+                                @*<div class="form-group">
+                <input type="file"><p class="help-block">
+                    <i class="fa fa-paperclip"></i>&nbsp;
+                    Attachments
+                </p>
+            </div>*@
+                                <hr><div class="compose-btn">
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fa fa-check"></i>&nbsp;
+                                        Send
+                                    </button>&nbsp;
+                                    @*<button class="btn btn-default btn-sm">
+                    <i class="fa fa-times"></i>&nbsp;
+                    Discard
+                </button>*@&nbsp;
+                                    @*<button class="btn btn-sm btn-default">Draft</button>*@
+                                </div>
+</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!--END CONTENT-->
+
+@section scripts{
+    @*<script src="/admin_assets/vendors/intro.js/intro.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.categories.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.pie.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.tooltip.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.resize.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.fillbetween.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.stack.js"></script>
+        <script src="/admin_assets/vendors/flot-chart/jquery.flot.spline.js"></script>
+        <script src="/admin_assets/vendors/calendar/zabuto_calendar.min.js"></script>
+        <script src="/admin_assets/vendors/sco.message/sco.message.js"></script>
+        <script src="/admin_assets/vendors/intro.js/intro.js"></script>
+        <script src="/admin_assets/js/index.js"></script>*@
+
+}
+<style>
+    /*********** BODY **************/
+    /* Change Body Attributes */
+    html, body {
+        font-family: 'Open Sans', serif;
+        background-color: blanchedalmond;
+        height: 100%;
+    }
+
+    .fill {
+        height: 100%;
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+
+
+    /******************** MAIN WRAPPERS *******************/
+    /* Main Window - Boxed style */
+    .chat-wrap {
+        height: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: white;
+        overflow: hidden;
+    }
+    /* Panel Wrapper: Side Menu - Content Window */
+    .panel-wrap {
+        height: 100%;
+        padding: 0;
+    }
+    /* Section Wrapper: Conversations - Contacts - Messages - Details */
+    .section-wrap {
+        height: 100%;
+    }
+    /* Header Wrapper */
+    .header-wrap {
+        height: 10%;
+    }
+    /* Content Wrapper */
+    .content-wrap {
+        height: 90%;
+        overflow: auto;
+    }
+        /* Messages Wrapper */
+        .content-wrap.messages {
+            height: 75%;
+        }
+    /* Message Text Wrapper */
+    .send-wrap {
+        height: 15%;
+    }
+
+
+    /**************** HEADER ****************/
+    /* Header Item */
+    .chat-header {
+        height: 100%;
+        width: 100%;
+        background: deepskyblue;
+        box-shadow: 0 1px 1px;
+        display: table;
+    }
+        /* Header Title */
+        .chat-header h4 {
+            display: table-cell;
+            vertical-align: middle;
+            width: 90%;
+        }
+    /* Header Button */
+    .header-button {
+        display: table-cell;
+        vertical-align: middle;
+        color: #333;
+    }
+        /* Header Properties */
+        .header-button a {
+            padding: 0;
+        }
+
+    .chat-header .btn:hover {
+        transition: color 0.5s ease;
+        color: #333;
+    }
+
+
+    /************* CONVERSATIONS *************/
+    /* Conversation Item */
+    .conversation {
+        text-align: left;
+        padding: 8px 10px 5px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+        transition: background-color 0.5s ease;
+    }
+        /* Conversation Properties */
+        .conversation:hover {
+            background-color: whitesmoke;
+        }
+
+    /******************* CONTACTS ***************/
+    /* Contact Item */
+    .contact {
+        padding: 21px 10px 12px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+        display: inline-block;
+        transition: background-color 0.5s ease;
+    }
+        /* Contact Properties */
+        .contact.btn:hover {
+            background-color: whitesmoke;
+        }
+
+    /**************** MESSAGES *****************/
+    /* Message Item */
+    .msg {
+        padding: 8px 10px 5px;
+        border-bottom: 1px solid #ddd;
+    }
+    /* Message Sender */
+    .message-wrap .media-heading {
+        color: #2285b3;
+        font-weight: 700;
+    }
+    /* Message Time */
+    .time {
+        color: #bfbfbf;
+    }
+
+
+    /*************** SEND MESSAGE **********************/
+    /* Send Message Item */
+    .send-message {
+        width: 100%;
+        /*height: 100%;*/
+        height: 92px;
+        background-color: whitesmoke;
+        box-shadow: 0 -1px 1px;
+        display: table;
+    }
+    /* Message Text */
+    .message-text {
+        padding: 2px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    /* Send Button */
+    .send-button {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: 10%;
+    }
+    /* Send Message Properties */
+    .no-resize-bar {
+        resize: none;
+        height: 100% !important;
+    }
+
+    .send-button a {
+        padding: 0;
+    }
+
+    .send-message .btn:hover {
+        transition: color 0.5s ease;
+        color: #0451b7;
+    }
+
+
+
+    /*************** OTHER ********************/
+    /* Remove Bootstrap Button Effect */
+    .btn.active, .btn:active {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    /* Fix Bootstrap Media Body Display */
+    /* For Conversations and Contacts */
+    .conversation .media-body, .contact .media-body {
+        display: block;
+        width: 100%;
+    }
+
+    /* Animate Side Information Menu */
+    #Messages {
+        -webkit-transition: width 0.15s ease, margin 0.15s ease;
+        -moz-transition: width 0.15s ease, margin 0.15s ease;
+        -o-transition: width 0.15s ease, margin 0.15s ease;
+        transition: width 0.15s ease, margin 0.15s ease;
+    }
+
+    /* Scrollbar Attributes */
+    body::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #ddd;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+    .scroll{
+        width: 180px;
+    height: 150px;
+    overflow-y: scroll;
+
+    }
+</style>
+<script>
+    /!* Slide Members Info *!/
+    $('.info-btn').on('click', function () {
+        $("#Messages").toggleClass('col-sm-12 col-sm-9');
+    });
+</script>
+
+
+

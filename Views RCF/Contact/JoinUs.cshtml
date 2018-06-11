@@ -1,0 +1,79 @@
+﻿@model Mutualex.JoinU
+@{
+    RNMediaEntities db = new RNMediaEntities();
+
+    ViewBag.Title = "Join Us";
+
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //TempData["About"] = "active";
+}
+
+<!-- Divider: Make a Donation -->
+<section class="cstm-parallax" data-bg-img="images/bg/bg2.jpg">
+    <div class="container pt-0 pb-0">
+        <div class="row" style="padding: 36px">
+            <div class="col-md-12" style="background: #ead09d; padding: 40px; border-radius: 10px">
+                @if (TempData["MSG"] != null)
+                {
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                        <strong>@TempData["MSG"]</strong>
+                    </div>
+                }
+                <h4 class="mt-0 mb-30 line-bottom">Join Us</h4>
+                <!-- Contact Form -->
+                @using (Html.BeginForm("JoinUs", "Contact", FormMethod.Post, new { @class = "register" }))
+                {
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="form_name">First Name <small>*</small></label>
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @type = "text", @placeholder = "FirstName", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="form_name">Last Name <small>*</small></label>
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @type = "text", @placeholder = "LastName", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="form_name">Contact No <small>*</small></label>
+                                @Html.TextBoxFor(model => model.ContNo, new { @class = "form-control", @type = "text", @placeholder = "Contact Number", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="form_email">Email Id <small>*</small></label>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "Email", @placeholder = "Email Id", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="form_name">Address </label>
+                                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @type = "text", @placeholder = "Address", @style = "height: 100px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="form_name">Message</label>
+                                @Html.TextAreaFor(model => model.Message, new { @class = "form-control", @type = "text", @placeholder = "Message", @style = "height: 100px" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="padding-top: 15px">
+                            <div class="form-group" style="margin-bottom:2px">
+                                <input class="btn btn-primary" type="submit" value="Submit" />
+                                <button type="reset" class="btn btn-primary">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

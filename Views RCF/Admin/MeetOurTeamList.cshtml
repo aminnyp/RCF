@@ -1,0 +1,128 @@
+﻿@using System.Text.RegularExpressions;
+@model Mutualex.News
+@{
+    ViewBag.Title = "Meet Our Team List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    TempData["MeetOurTeam"] = "class=" + "active";
+    TempData["ListMeetOurTeam"] = "class=" + "active";
+
+    TempData["PageTitle"] = "Meet Our Team List";
+}
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+
+<div class="page-content">
+    <div class="row">
+
+
+        <div class="col-lg-12">
+            <div class="portlet box panel panel-grey">
+                <div class="panel-heading">
+                    Meet Our Team List
+                </div>
+                <div class="portlet-body">
+                    <div class="row mbm">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="table_id" class="table table-hover table-striped table-bordered tablesorter">
+                                    <thead>
+                                        <tr>
+
+                                            @*<th><span data-toggle="tooltip" data-placement="right" data-original-title="Review Title">Action</span></th>*@
+                                            <th><span data-toggle="tooltip" data-placement="right" data-original-title="Review Title">Id</span></th>
+                                            <th><span data-toggle="tooltip" data-placement="right" data-original-title="Review Title">Title</span></th>
+                                            <th><span data-toggle="tooltip" data-placement="right" data-original-title="Review Title" >Description</span></th>
+                                      
+
+                                            <th><span data-toggle="tooltip" data-placement="right" data-original-title="Status">View</span></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Mutualex.MeetOurTeam item in ViewBag.MeetOurTeamList)
+                                        {
+                                            <tr>
+
+                                                <td><b>@item.Id</b></td>
+                                                @*<td style="width:50%">@i.BlogDesc</td>*@
+                                                <td>@item.Title</td>
+                                                <td>@(Regex.Replace(item.Description, "<.*?>", string.Empty).Length >= 200 ? Regex.Replace(item.Description, "<.*?>", string.Empty).Substring(0, 200) : Regex.Replace(item.Description, "<.*?>", string.Empty))</td>
+                                                <td>
+                                                   
+                                                    <a href="/Admin/MeetOurTeam/@item.Id" class="btn btn-success btn-xs">Edit</a>
+                                                    <a href="/Admin/DelMeetOurTeam/@item.Id" class="btn btn-success btn-xs">Delete</a>
+
+                                                    
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-stackable" tabindex="-1" role="dialog" aria-labelledby="modal-stackable-label" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                <h4 id="modal-stackable-label" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form" id="DetailsHM">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function ChangeReviewStatus(_pid) {
+            var url = "/Product/OpenChangeReviewStatusPopUp/" + _pid;
+            $.get(url, { ID: _pid }, function (data) {
+                $('#DetailsHM1').html(data);
+            });
+        }
+    </script>
+
+
+
+    <script src="/admin_assets/vendors/DataTables/media/js/jquery.dataTables.js"></script>
+    <script src="/admin_assets/vendors/DataTables/media/js/dataTables.bootstrap.js"></script>
+    <script src="/admin_assets/vendors/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+    <script src="/admin_assets/js/table-datatables.js"></script>
+
+    <script src="/admin_assets/js/form-components.js"></script>
+    <script type="text/javascript">
+        // When the document is ready
+        $(document).ready(function () {
+
+            $('.input-daterange').datepicker({
+                todayBtn: "linked"
+            });
+
+        });
+        //$("#yearpicker").datepicker({
+        //    format: "yyyy",
+        //    viewMode: "years",
+        //    minViewMode: "years"
+        //});
+
+    </script>
+}
+

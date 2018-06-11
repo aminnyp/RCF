@@ -1,0 +1,125 @@
+﻿@*@model Mutualex.Models.property*@
+@using System.Data;
+@using Mutualex.Models;
+@{
+    HttpCookie login_Cookie = Request.Cookies["login_cookie"];
+    property p = new property();
+    DataSet ds = new DataSet();
+    //Datalayer dl = new Datalayer();
+    DataLayer dl = new DataLayer();
+    p.Condition1 = login_Cookie["UserID"].ToString();
+    p.Condition2 = "";
+    p.Condition3 = "";
+    p.onTable = "USER_NOTIFICATION_ALL";
+    // ds = dl.MAILBOX_CONDITIONAL_QUERY(p);
+
+    List<property> NotifList = new List<property>();
+
+    //foreach (DataRow item in ds.Tables[0].Rows)
+    //{
+        property stp = new property();
+        //stp.id = item["id"].ToString();
+        //stp.Title = item["Title"].ToString();
+        //stp.LinkURL = item["LinkURL"].ToString();
+        //stp.onDate = item["onDate"].ToString();
+        NotifList.Add(stp);
+    //}
+    ViewBag.NotifListAll = NotifList;
+
+    List<property> MSGList = new List<property>();
+
+   // foreach (DataRow item in ds.Tables[1].Rows)
+    //{
+        property stp1 = new property();
+        //stp.id = item["id"].ToString();
+        //stp.Title = item["Subject"].ToString();
+        //stp.ImgURL = item["ImgURL"].ToString().Replace("~","");
+        //stp.onDate = item["onDate"].ToString();
+        //stp.mailfrom = item["FullName"].ToString();
+        MSGList.Add(stp1);
+    //}
+    ViewBag.MSGListAll = MSGList;
+}
+
+
+
+
+
+
+
+
+<li class="dropdown">
+    @*<a data-hover="dropdown" href="#" class="dropdown-toggle">
+        <i class="fa fa-bell fa-fw"></i>
+        <span class="badge badge-green">@ViewBag.NotifListAll.Count</span>
+    </a>*@
+    <ul class="dropdown-menu dropdown-alerts">
+        @*<li>
+            <p>You have @ViewBag.NotifListAll.Count new notifications</p>
+        </li>*@
+        <li>
+            <div class="dropdown-slimscroll">
+                <ul>
+                    @foreach (Mutualex.Models.property i in ViewBag.NotifListAll)
+                    {
+                    <li>
+                        <a href="@i.LinkURL" onclick="change_readStatus(@i.id)" class="notification_url" data-notice-id="@i.id">
+                            @i.Title <span class="pull-right text-primary small">@i.onDate</span>
+                        </a>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </li>
+        <li class="last"><a href="/Notification" class="text-right">See all alerts</a></li>
+    </ul>
+</li>
+<li class="dropdown">
+    @*<a data-hover="dropdown" href="#" class="dropdown-toggle">
+        <i class="fa fa-envelope fa-fw"></i><span class="badge badge-orange">@ViewBag.MSGListAll.Count</span>
+    </a>*@
+    <ul class="dropdown-menu dropdown-messages">
+        <li>
+            <p>You have @ViewBag.MSGListAll.Count new messages</p>
+        </li>
+        <li>
+            <div class="dropdown-slimscroll">
+                <ul>
+                    @foreach (Mutualex.Models.property i in ViewBag.MSGListAll)
+                    {
+                    <li>
+                        <a href="/Mail_Box/mail/@i.id/Inbox">
+                            <span class="avatar">
+                                @if (i.ImgURL == "" || i.ImgURL == null)
+                                {
+                                    <img src="/admin_assets/images/admin.jpg" alt="" class="img-responsive img-circle" />
+                                }
+                                else
+                                {
+                                    <img src="@i.ImgURL" alt="" class="img-responsive img-circle" />
+                                }
+                            </span>
+                            <span class="info">
+                            <span class="name">@i.mailfrom</span>
+                            <span class="desc">@i.Title</span></span>
+                        </a>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </li>
+        <li class="last"><a href="/Mail_Box/Index/1/Unread">Read all messages</a></li>
+    </ul>
+</li>
+<li id="topbar-chat">
+    <a href="javascript:void(0)" class="btn-chat">
+        <i class="fa fa-comments"></i>
+        <span class="badge badge-info" id="totURChat"></span>
+    </a>
+</li>
+
+
+
+
+
+

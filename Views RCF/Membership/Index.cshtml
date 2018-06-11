@@ -1,0 +1,754 @@
+﻿@model Mutualex.Membership_reg
+@{
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+    ViewBag.Title = "Membership";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    TempData["Membership"] = "active";
+}
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+@using (Html.BeginForm("Index", "Membership", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+
+    <div class="container" style="margin-top:30px;">
+        <form class="form-horizontal" role="form">
+            <h2 style="margin-left:-15px;">Membership Form</h2>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">First Name</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Full Name" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.FirstName, new { @placeholder = "First Name", @class = "form-control", @required = "required" })
+                            @*<span class="help-block">First Name, eg.: Avijit, Priti, Arghya</span>*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Last Name</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Last Name" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.LastName, new { @placeholder = "Last Name", @class = "form-control", @required = "required" })
+                            @*<span class="help-block">Last Name, eg.: Banerjee, Dey, Sarkar</span>*@
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="email" class="control-label">Email</label>
+                        @*<input type="email" id="email" placeholder="Email" class="form-control">*@
+                        @Html.TextBoxFor(model => model.EmailID, new { @placeholder = "Email", @class = "form-control", @required = "required" })
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="control-label">Password</label>
+                        <div>
+
+                            @Html.TextBoxFor(model => model.Password, new { @placeholder = "Password", @type = "password", @class = "form-control", @required = "required" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="birthDate" class="control-label">Date of Birth</label>
+                        <div>
+                            @*<input type="date" id="birthDate" class="form-control">*@
+                            @Html.TextBoxFor(model => model.DateOfBirth, new { @id = "birthDate", @type = "date", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Age</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Age" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.Age, new { @placeholder = "Age", @type = "Number", @class = "form-control", @required = "required", @min = "0" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="country" class="control-label">Gender</label>
+                        <div>
+                            @Html.DropDownListFor(model => model.Gender,
+                         new List<SelectListItem>
+                         {
+                                            new SelectListItem { Text="--SELECT--", Value=""},
+                                            new SelectListItem { Text="Male", Value="Male"},
+                                            new SelectListItem { Text="Female", Value="Female"},
+                                            new SelectListItem { Text="Other", Value="Other"}
+                         }
+                         , new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="country" class="control-label">Nationality</label>
+                        <div>
+                            @Html.DropDownListFor(model => model.Nationality,
+                         new List<SelectListItem>
+                         {
+                                            new SelectListItem { Text="--SELECT--", Value=""},
+                                            new SelectListItem { Value="afghan",Text="Afghan"},
+  new SelectListItem { Value="albanian",Text="Albanian"},
+  new SelectListItem { Value="algerian",Text="Algerian"},
+  new SelectListItem { Value="american",Text="American"},
+  new SelectListItem { Value="andorran",Text="Andorran"},
+  new SelectListItem { Value="angolan",Text="Angolan"},
+  new SelectListItem { Value="antiguans",Text="Antiguans"},
+  new SelectListItem { Value="argentinean",Text="Argentinean"},
+  new SelectListItem { Value="armenian",Text="Armenian"},
+  new SelectListItem { Value="australian",Text="Australian"},
+  new SelectListItem { Value="austrian",Text="Austrian"},
+  new SelectListItem { Value="azerbaijani",Text="Azerbaijani"},
+  new SelectListItem { Value="bahamian",Text="Bahamian"},
+  new SelectListItem { Value="bahraini",Text="Bahraini"},
+  new SelectListItem { Value="bangladeshi",Text="Bangladeshi"},
+  new SelectListItem { Value="barbadian",Text="Barbadian"},
+  new SelectListItem { Value="barbudans",Text="Barbudans"},
+  new SelectListItem { Value="batswana",Text="Batswana"},
+  new SelectListItem { Value="belarusian",Text="Belarusian"},
+  new SelectListItem { Value="belgian",Text="Belgian"},
+  new SelectListItem { Value="belizean",Text="Belizean"},
+  new SelectListItem { Value="beninese",Text="Beninese"},
+  new SelectListItem { Value="bhutanese",Text="Bhutanese"},
+  new SelectListItem { Value="bolivian",Text="Bolivian"},
+  new SelectListItem { Value="bosnian",Text="Bosnian"},
+  new SelectListItem { Value="brazilian",Text="Brazilian"},
+  new SelectListItem { Value="british",Text="British"},
+  new SelectListItem { Value="bruneian",Text="Bruneian"},
+  new SelectListItem { Value="bulgarian",Text="Bulgarian"},
+  new SelectListItem { Value="burkinabe",Text="Burkinabe"},
+  new SelectListItem { Value="burmese",Text="Burmese"},
+  new SelectListItem { Value="burundian",Text="Burundian"},
+  new SelectListItem { Value="cambodian",Text="Cambodian"},
+  new SelectListItem { Value="cameroonian",Text="Cameroonian"},
+  new SelectListItem { Value="canadian",Text="Canadian"},
+  new SelectListItem { Value="cape verdean",Text="Cape Verdean"},
+  new SelectListItem { Value="central african",Text="Central African"},
+  new SelectListItem { Value="chadian",Text="Chadian"},
+  new SelectListItem { Value="chilean",Text="Chilean"},
+  new SelectListItem { Value="chinese",Text="Chinese"},
+  new SelectListItem { Value="colombian",Text="Colombian"},
+  new SelectListItem { Value="comoran",Text="Comoran"},
+  new SelectListItem { Value="congolese",Text="Congolese"},
+  new SelectListItem { Value="costa rican",Text="Costa Rican"},
+  new SelectListItem { Value="croatian",Text="Croatian"},
+  new SelectListItem { Value="cuban",Text="Cuban"},
+  new SelectListItem { Value="cypriot",Text="Cypriot"},
+  new SelectListItem { Value="czech",Text="Czech"},
+  new SelectListItem { Value="danish",Text="Danish"},
+  new SelectListItem { Value="djibouti",Text="Djibouti"},
+  new SelectListItem { Value="dominican",Text="Dominican"},
+  new SelectListItem { Value="dutch",Text="Dutch"},
+  new SelectListItem { Value="east timorese",Text="East Timorese"},
+  new SelectListItem { Value="ecuadorean",Text="Ecuadorean"},
+  new SelectListItem { Value="egyptian",Text="Egyptian"},
+  new SelectListItem { Value="emirian",Text="Emirian"},
+  new SelectListItem { Value="equatorial guinean",Text="Equatorial Guinean"},
+  new SelectListItem { Value="eritrean",Text="Eritrean"},
+  new SelectListItem { Value="estonian",Text="Estonian"},
+  new SelectListItem { Value="ethiopian",Text="Ethiopian"},
+  new SelectListItem { Value="fijian",Text="Fijian"},
+  new SelectListItem { Value="filipino",Text="Filipino"},
+  new SelectListItem { Value="finnish",Text="Finnish"},
+  new SelectListItem { Value="french",Text="French"},
+  new SelectListItem { Value="gabonese",Text="Gabonese"},
+  new SelectListItem { Value="gambian",Text="Gambian"},
+  new SelectListItem { Value="georgian",Text="Georgian"},
+  new SelectListItem { Value="german",Text="German"},
+  new SelectListItem { Value="ghanaian",Text="Ghanaian"},
+  new SelectListItem { Value="greek",Text="Greek"},
+  new SelectListItem { Value="grenadian",Text="Grenadian"},
+  new SelectListItem { Value="guatemalan",Text="Guatemalan"},
+  new SelectListItem { Value="guinea-bissauan",Text="Guinea-Bissauan"},
+  new SelectListItem { Value="guinean",Text="Guinean"},
+  new SelectListItem { Value="guyanese",Text="Guyanese"},
+  new SelectListItem { Value="haitian",Text="Haitian"},
+  new SelectListItem { Value="herzegovinian",Text="Herzegovinian"},
+  new SelectListItem { Value="honduran",Text="Honduran"},
+  new SelectListItem { Value="hungarian",Text="Hungarian"},
+  new SelectListItem { Value="icelander",Text="Icelander"},
+  new SelectListItem { Value="indian",Text="Indian"},
+  new SelectListItem { Value="indonesian",Text="Indonesian"},
+  new SelectListItem { Value="iranian",Text="Iranian"},
+  new SelectListItem { Value="iraqi",Text="Iraqi"},
+  new SelectListItem { Value="irish",Text="Irish"},
+  new SelectListItem { Value="israeli",Text="Israeli"},
+  new SelectListItem { Value="italian",Text="Italian"},
+  new SelectListItem { Value="ivorian",Text="Ivorian"},
+  new SelectListItem { Value="jamaican",Text="Jamaican"},
+  new SelectListItem { Value="japanese",Text="Japanese"},
+  new SelectListItem { Value="jordanian",Text="Jordanian"},
+  new SelectListItem { Value="kazakhstani",Text="Kazakhstani"},
+  new SelectListItem { Value="kenyan",Text="Kenyan"},
+  new SelectListItem { Value="kittian and nevisian",Text="Kittian and Nevisian"},
+  new SelectListItem { Value="kuwaiti",Text="Kuwaiti"},
+  new SelectListItem { Value="kyrgyz",Text="Kyrgyz"},
+  new SelectListItem { Value="laotian",Text="Laotian"},
+  new SelectListItem { Value="latvian",Text="Latvian"},
+  new SelectListItem { Value="lebanese",Text="Lebanese"},
+  new SelectListItem { Value="liberian",Text="Liberian"},
+  new SelectListItem { Value="libyan",Text="Libyan"},
+  new SelectListItem { Value="liechtensteiner",Text="Liechtensteiner"},
+  new SelectListItem { Value="lithuanian",Text="Lithuanian"},
+  new SelectListItem { Value="luxembourger",Text="Luxembourger"},
+  new SelectListItem { Value="macedonian",Text="Macedonian"},
+  new SelectListItem { Value="malagasy",Text="Malagasy"},
+  new SelectListItem { Value="malawian",Text="Malawian"},
+  new SelectListItem { Value="malaysian",Text="Malaysian"},
+  new SelectListItem { Value="maldivan",Text="Maldivan"},
+  new SelectListItem { Value="malian",Text="Malian"},
+  new SelectListItem { Value="maltese",Text="Maltese"},
+  new SelectListItem { Value="marshallese",Text="Marshallese"},
+  new SelectListItem { Value="mauritanian",Text="Mauritanian"},
+  new SelectListItem { Value="mauritian",Text="Mauritian"},
+  new SelectListItem { Value="mexican",Text="Mexican"},
+  new SelectListItem { Value="micronesian",Text="Micronesian"},
+  new SelectListItem { Value="moldovan",Text="Moldovan"},
+  new SelectListItem { Value="monacan",Text="Monacan"},
+  new SelectListItem { Value="mongolian",Text="Mongolian"},
+  new SelectListItem { Value="moroccan",Text="Moroccan"},
+  new SelectListItem { Value="mosotho",Text="Mosotho"},
+  new SelectListItem { Value="motswana",Text="Motswana"},
+  new SelectListItem { Value="mozambican",Text="Mozambican"},
+  new SelectListItem { Value="namibian",Text="Namibian"},
+  new SelectListItem { Value="nauruan",Text="Nauruan"},
+  new SelectListItem { Value="nepalese",Text="Nepalese"},
+  new SelectListItem { Value="new zealander",Text="New Zealander"},
+  new SelectListItem { Value="ni-vanuatu",Text="Ni-Vanuatu"},
+  new SelectListItem { Value="nicaraguan",Text="Nicaraguan"},
+  new SelectListItem { Value="nigerien",Text="Nigerien"},
+  new SelectListItem { Value="north korean",Text="North Korean"},
+  new SelectListItem { Value="northern irish",Text="Northern Irish"},
+  new SelectListItem { Value="norwegian",Text="Norwegian"},
+  new SelectListItem { Value="omani",Text="Omani"},
+  new SelectListItem { Value="pakistani",Text="Pakistani"},
+  new SelectListItem { Value="palauan",Text="Palauan"},
+  new SelectListItem { Value="panamanian",Text="Panamanian"},
+  new SelectListItem { Value="papua new guinean",Text="Papua New Guinean"},
+  new SelectListItem { Value="paraguayan",Text="Paraguayan"},
+  new SelectListItem { Value="peruvian",Text="Peruvian"},
+  new SelectListItem { Value="polish",Text="Polish"},
+  new SelectListItem { Value="portuguese",Text="Portuguese"},
+  new SelectListItem { Value="qatari",Text="Qatari"},
+  new SelectListItem { Value="romanian",Text="Romanian"},
+  new SelectListItem { Value="russian",Text="Russian"},
+  new SelectListItem { Value="rwandan",Text="Rwandan"},
+  new SelectListItem { Value="saint lucian",Text="Saint Lucian"},
+  new SelectListItem { Value="salvadoran",Text="Salvadoran"},
+  new SelectListItem { Value="samoan",Text="Samoan"},
+  new SelectListItem { Value="san marinese",Text="San Marinese"},
+  new SelectListItem { Value="sao tomean",Text="Sao Tomean"},
+  new SelectListItem { Value="saudi",Text="Saudi"},
+  new SelectListItem { Value="scottish",Text="Scottish"},
+  new SelectListItem { Value="senegalese",Text="Senegalese"},
+  new SelectListItem { Value="serbian",Text="Serbian"},
+  new SelectListItem { Value="seychellois",Text="Seychellois"},
+  new SelectListItem { Value="sierra leonean",Text="Sierra Leonean"},
+  new SelectListItem { Value="singaporean",Text="Singaporean"},
+  new SelectListItem { Value="slovakian",Text="Slovakian"},
+  new SelectListItem { Value="slovenian",Text="Slovenian"},
+  new SelectListItem { Value="solomon islander",Text="Solomon Islander"},
+  new SelectListItem { Value="somali",Text="Somali"},
+  new SelectListItem { Value="south african",Text="South African"},
+  new SelectListItem { Value="south korean",Text="South Korean"},
+  new SelectListItem { Value="spanish",Text="Spanish"},
+  new SelectListItem { Value="sri lankan",Text="Sri Lankan"},
+  new SelectListItem { Value="sudanese",Text="Sudanese"},
+  new SelectListItem { Value="surinamer",Text="Surinamer"},
+  new SelectListItem { Value="swazi",Text="Swazi"},
+  new SelectListItem { Value="swedish",Text="Swedish"},
+  new SelectListItem { Value="swiss",Text="Swiss"},
+  new SelectListItem { Value="syrian",Text="Syrian"},
+  new SelectListItem { Value="taiwanese",Text="Taiwanese"},
+  new SelectListItem { Value="tajik",Text="Tajik"},
+  new SelectListItem { Value="tanzanian",Text="Tanzanian"},
+  new SelectListItem { Value="thai",Text="Thai"},
+  new SelectListItem { Value="togolese",Text="Togolese"},
+  new SelectListItem { Value="tongan",Text="Tongan"},
+  new SelectListItem { Value="trinidadian or tobagonian",Text="Trinidadian or Tobagonian"},
+  new SelectListItem { Value="tunisian",Text="Tunisian"},
+  new SelectListItem { Value="turkish",Text="Turkish"},
+  new SelectListItem { Value="tuvaluan",Text="Tuvaluan"},
+  new SelectListItem { Value="ugandan",Text="Ugandan"},
+  new SelectListItem { Value="ukrainian",Text="Ukrainian"},
+  new SelectListItem { Value="uruguayan",Text="Uruguayan"},
+  new SelectListItem { Value="uzbekistani",Text="Uzbekistani"},
+  new SelectListItem { Value="venezuelan",Text="Venezuelan"},
+  new SelectListItem { Value="vietnamese",Text="Vietnamese"},
+  new SelectListItem { Value="welsh",Text="Welsh"},
+  new SelectListItem { Value="yemenite",Text="Yemenite"},
+  new SelectListItem { Value="zambian",Text="Zambian"},
+  new SelectListItem { Value="zimbabwean",Text="Zimbabwean"},
+
+                         }
+                         , new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="country" class="control-label">Country</label>
+                        <div>
+                            @Html.DropDownListFor(model => model.Country,
+                         new List<SelectListItem>
+                         {
+    new SelectListItem { Text="--SELECT--", Value=""},
+    new SelectListItem { Text="Albania",Value="Albania"},
+    new SelectListItem { Text="Algeria",Value="Algeria"},
+    new SelectListItem { Text="American Samoa",Value="American Samoa"},
+    new SelectListItem { Text="Andorra",Value="Andorra"},
+    new SelectListItem { Text="Angola",Value="Angola"},
+    new SelectListItem { Text="Anguilla",Value="Anguilla"},
+    new SelectListItem { Text="Antartica",Value="Antarctica"},
+    new SelectListItem { Text="Antigua and Barbuda",Value="Antigua and Barbuda"},
+    new SelectListItem { Text="Argentina",Value="Argentina"},
+    new SelectListItem { Text="Armenia",Value="Armenia"},
+    new SelectListItem { Text="Aruba",Value="Aruba"},
+    new SelectListItem { Text="Australia",Value="Australia"},
+    new SelectListItem { Text="Austria",Value="Austria"},
+    new SelectListItem { Text="Azerbaijan",Value="Azerbaijan"},
+    new SelectListItem { Text="Bahamas",Value="Bahamas"},
+    new SelectListItem { Text="Bahrain",Value="Bahrain"},
+    new SelectListItem { Text="Bangladesh",Value="Bangladesh"},
+    new SelectListItem { Text="Barbados",Value="Barbados"},
+    new SelectListItem { Text="Belarus",Value="Belarus"},
+    new SelectListItem { Text="Belgium",Value="Belgium"},
+    new SelectListItem { Text="Belize",Value="Belize"},
+    new SelectListItem { Text="Benin",Value="Benin"},
+    new SelectListItem { Text="Bermuda",Value="Bermuda"},
+    new SelectListItem { Text="Bhutan",Value="Bhutan"},
+    new SelectListItem { Text="Bolivia",Value="Bolivia"},
+    new SelectListItem { Text="Bosnia and Herzegowina",Value="Bosnia and Herzegowina"},
+    new SelectListItem { Text="Botswana",Value="Botswana"},
+    new SelectListItem { Text="Bouvet Island",Value="Bouvet Island"},
+    new SelectListItem { Text="Brazil",Value="Brazil"},
+    new SelectListItem { Text="British Indian Ocean Territory",Value="British Indian Ocean Territory"},
+    new SelectListItem { Text="Brunei Darussalam",Value="Brunei Darussalam"},
+    new SelectListItem { Text="Bulgaria",Value="Bulgaria"},
+    new SelectListItem { Text="Burkina Faso",Value="Burkina Faso"},
+    new SelectListItem { Text="Burundi",Value="Burundi"},
+    new SelectListItem { Text="Cambodia",Value="Cambodia"},
+    new SelectListItem { Text="Cameroon",Value="Cameroon"},
+    new SelectListItem { Text="Canada",Value="Canada"},
+    new SelectListItem { Text="Cape Verde",Value="Cape Verde"},
+    new SelectListItem { Text="Cayman Islands",Value="Cayman Islands"},
+    new SelectListItem { Text="Central African Republic",Value="Central African Republic"},
+    new SelectListItem { Text="Chad",Value="Chad"},
+    new SelectListItem { Text="Chile",Value="Chile"},
+    new SelectListItem { Text="China",Value="China"},
+    new SelectListItem { Text="Christmas Island",Value="Christmas Island"},
+    new SelectListItem { Text="Cocos Islands",Value="Cocos (Keeling) Islands"},
+    new SelectListItem { Text="Colombia",Value="Colombia"},
+    new SelectListItem { Text="Comoros",Value="Comoros"},
+    new SelectListItem { Text="Congo",Value="Congo"},
+    new SelectListItem { Text="Congo",Value="Congo, the Democratic Republic of the"},
+    new SelectListItem { Text="Cook Islands",Value="Cook Islands"},
+    new SelectListItem { Text="Costa Rica",Value="Costa Rica"},
+    new SelectListItem { Text="Cota D'Ivoire",Value="Cote d'Ivoire"},
+    new SelectListItem { Text="Croatia",Value="Croatia (Hrvatska)"},
+    new SelectListItem { Text="Cuba",Value="Cuba"},
+    new SelectListItem { Text="Cyprus",Value="Cyprus"},
+    new SelectListItem { Text="Czech Republic",Value="Czech Republic"},
+    new SelectListItem { Text="Denmark",Value="Denmark"},
+    new SelectListItem { Text="Djibouti",Value="Djibouti"},
+    new SelectListItem { Text="Dominica",Value="Dominica"},
+    new SelectListItem { Text="Dominican Republic",Value="Dominican Republic"},
+    new SelectListItem { Text="East Timor",Value="East Timor"},
+    new SelectListItem { Text="Ecuador",Value="Ecuador"},
+    new SelectListItem { Text="Egypt",Value="Egypt"},
+    new SelectListItem { Text="El Salvador",Value="El Salvador"},
+    new SelectListItem { Text="Equatorial Guinea",Value="Equatorial Guinea"},
+    new SelectListItem { Text="Eritrea",Value="Eritrea"},
+    new SelectListItem { Text="Estonia",Value="Estonia"},
+    new SelectListItem { Text="Ethiopia",Value="Ethiopia"},
+    new SelectListItem { Text="Falkland Islands",Value="Falkland Islands (Malvinas)"},
+    new SelectListItem { Text="Faroe Islands",Value="Faroe Islands"},
+    new SelectListItem { Text="Fiji",Value="Fiji"},
+    new SelectListItem { Text="Finland",Value="Finland"},
+    new SelectListItem { Text="France",Value="France"},
+    new SelectListItem { Text="France Metropolitan",Value="France, Metropolitan"},
+    new SelectListItem { Text="French Guiana",Value="French Guiana"},
+    new SelectListItem { Text="French Polynesia",Value="French Polynesia"},
+    new SelectListItem { Text="French Southern Territories",Value="French Southern Territories"},
+    new SelectListItem { Text="Gabon",Value="Gabon"},
+    new SelectListItem { Text="Gambia",Value="Gambia"},
+    new SelectListItem { Text="Georgia",Value="Georgia"},
+    new SelectListItem { Text="Germany",Value="Germany"},
+    new SelectListItem { Text="Ghana",Value="Ghana"},
+    new SelectListItem { Text="Gibraltar",Value="Gibraltar"},
+    new SelectListItem { Text="Greece",Value="Greece"},
+    new SelectListItem { Text="Greenland",Value="Greenland"},
+    new SelectListItem { Text="Grenada",Value="Grenada"},
+    new SelectListItem { Text="Guadeloupe",Value="Guadeloupe"},
+    new SelectListItem { Text="Guam",Value="Guam"},
+    new SelectListItem { Text="Guatemala",Value="Guatemala"},
+    new SelectListItem { Text="Guinea",Value="Guinea"},
+    new SelectListItem { Text="Guinea-Bissau",Value="Guinea-Bissau"},
+    new SelectListItem { Text="Guyana",Value="Guyana"},
+    new SelectListItem { Text="Haiti",Value="Haiti"},
+    new SelectListItem { Text="Heard and McDonald Islands",Value="Heard and Mc Donald Islands"},
+    new SelectListItem { Text="Holy See",Value="Holy See (Vatican City State)"},
+    new SelectListItem { Text="Honduras",Value="Honduras"},
+    new SelectListItem { Text="Hong Kong",Value="Hong Kong"},
+    new SelectListItem { Text="Hungary",Value="Hungary"},
+    new SelectListItem { Text="Iceland",Value="Iceland"},
+    new SelectListItem { Text="India",Value="India"},
+    new SelectListItem { Text="Indonesia",Value="Indonesia"},
+    new SelectListItem { Text="Iran",Value="Iran (Islamic Republic of)"},
+    new SelectListItem { Text="Iraq",Value="Iraq"},
+    new SelectListItem { Text="Ireland",Value="Ireland"},
+    new SelectListItem { Text="Israel",Value="Israel"},
+    new SelectListItem { Text="Italy",Value="Italy"},
+    new SelectListItem { Text="Jamaica",Value="Jamaica"},
+    new SelectListItem { Text="Japan",Value="Japan"},
+    new SelectListItem { Text="Jordan",Value="Jordan"},
+    new SelectListItem { Text="Kazakhstan",Value="Kazakhstan"},
+    new SelectListItem { Text="Kenya",Value="Kenya"},
+    new SelectListItem { Text="Kiribati",Value="Kiribati"},
+    new SelectListItem { Text="Democratic People's Republic of Korea",Value="Korea, Democratic People's Republic of"},
+    new SelectListItem { Text="Korea",Value="Korea, Republic of"},
+    new SelectListItem { Text="Kuwait",Value="Kuwait"},
+    new SelectListItem { Text="Kyrgyzstan",Value="Kyrgyzstan"},
+    new SelectListItem { Text="Lao",Value="Lao People's Democratic Republic"},
+    new SelectListItem { Text="Latvia",Value="Latvia"},
+    new SelectListItem { Text="Lebanon",Value="Lebanon"},
+    new SelectListItem { Text="Lesotho",Value="Lesotho"},
+    new SelectListItem { Text="Liberia",Value="Liberia"},
+    new SelectListItem { Text="Libyan Arab Jamahiriya",Value="Libyan Arab Jamahiriya"},
+    new SelectListItem { Text="Liechtenstein",Value="Liechtenstein"},
+    new SelectListItem { Text="Lithuania",Value="Lithuania"},
+    new SelectListItem { Text="Luxembourg",Value="Luxembourg"},
+    new SelectListItem { Text="Macau",Value="Macau"},
+    new SelectListItem { Text="Macedonia",Value="Macedonia, The Former Yugoslav Republic of"},
+    new SelectListItem { Text="Madagascar",Value="Madagascar"},
+    new SelectListItem { Text="Malawi",Value="Malawi"},
+    new SelectListItem { Text="Malaysia",Value="Malaysia"},
+    new SelectListItem { Text="Maldives",Value="Maldives"},
+    new SelectListItem { Text="Mali",Value="Mali"},
+    new SelectListItem { Text="Malta",Value="Malta"},
+    new SelectListItem { Text="Marshall Islands",Value="Marshall Islands"},
+    new SelectListItem { Text="Martinique",Value="Martinique"},
+    new SelectListItem { Text="Mauritania",Value="Mauritania"},
+    new SelectListItem { Text="Mauritius",Value="Mauritius"},
+    new SelectListItem { Text="Mayotte",Value="Mayotte"},
+    new SelectListItem { Text="Mexico",Value="Mexico"},
+    new SelectListItem { Text="Micronesia",Value="Micronesia, Federated States of"},
+    new SelectListItem { Text="Moldova",Value="Moldova, Republic of"},
+    new SelectListItem { Text="Monaco",Value="Monaco"},
+    new SelectListItem { Text="Mongolia",Value="Mongolia"},
+    new SelectListItem { Text="Montserrat",Value="Montserrat"},
+    new SelectListItem { Text="Morocco",Value="Morocco"},
+    new SelectListItem { Text="Mozambique",Value="Mozambique"},
+    new SelectListItem { Text="Myanmar",Value="Myanmar"},
+    new SelectListItem { Text="Namibia",Value="Namibia"},
+    new SelectListItem { Text="Nauru",Value="Nauru"},
+    new SelectListItem { Text="Nepal",Value="Nepal"},
+    new SelectListItem { Text="Netherlands",Value="Netherlands"},
+    new SelectListItem { Text="Netherlands Antilles",Value="Netherlands Antilles"},
+    new SelectListItem { Text="New Caledonia",Value="New Caledonia"},
+    new SelectListItem { Text="New Zealand",Value="New Zealand"},
+    new SelectListItem { Text="Nicaragua",Value="Nicaragua"},
+    new SelectListItem { Text="Niger",Value="Niger"},
+    new SelectListItem { Text="Nigeria",Value="Nigeria"},
+    new SelectListItem { Text="Niue",Value="Niue"},
+    new SelectListItem { Text="Norfolk Island",Value="Norfolk Island"},
+    new SelectListItem { Text="Northern Mariana Islands",Value="Northern Mariana Islands"},
+    new SelectListItem { Text="Norway",Value="Norway"},
+    new SelectListItem { Text="Oman",Value="Oman"},
+    new SelectListItem { Text="Pakistan",Value="Pakistan"},
+    new SelectListItem { Text="Palau",Value="Palau"},
+    new SelectListItem { Text="Panama",Value="Panama"},
+    new SelectListItem { Text="Papua New Guinea",Value="Papua New Guinea"},
+    new SelectListItem { Text="Paraguay",Value="Paraguay"},
+    new SelectListItem { Text="Peru",Value="Peru"},
+    new SelectListItem { Text="Philippines",Value="Philippines"},
+    new SelectListItem { Text="Pitcairn",Value="Pitcairn"},
+    new SelectListItem { Text="Poland",Value="Poland"},
+    new SelectListItem { Text="Portugal",Value="Portugal"},
+    new SelectListItem { Text="Puerto Rico",Value="Puerto Rico"},
+    new SelectListItem { Text="Qatar",Value="Qatar"},
+    new SelectListItem { Text="Reunion",Value="Reunion"},
+    new SelectListItem { Text="Romania",Value="Romania"},
+    new SelectListItem { Text="Russia",Value="Russian Federation"},
+    new SelectListItem { Text="Rwanda",Value="Rwanda"},
+    new SelectListItem { Text="Saint Kitts and Nevis",Value="Saint Kitts and Nevis"},
+    new SelectListItem { Text="Saint LUCIA",Value="Saint LUCIA"},
+    new SelectListItem { Text="Saint Vincent",Value="Saint Vincent and the Grenadines"},
+    new SelectListItem { Text="Samoa",Value="Samoa"},
+    new SelectListItem { Text="San Marino",Value="San Marino"},
+    new SelectListItem { Text="Sao Tome and Principe",Value="Sao Tome and Principe"},
+    new SelectListItem { Text="Saudi Arabia",Value="Saudi Arabia"},
+    new SelectListItem { Text="Senegal",Value="Senegal"},
+    new SelectListItem { Text="Seychelles",Value="Seychelles"},
+    new SelectListItem { Text="Sierra",Value="Sierra Leone"},
+    new SelectListItem { Text="Singapore",Value="Singapore"},
+    new SelectListItem { Text="Slovakia",Value="Slovakia (Slovak Republic)"},
+    new SelectListItem { Text="Slovenia",Value="Slovenia"},
+    new SelectListItem { Text="Solomon Islands",Value="Solomon Islands"},
+    new SelectListItem { Text="Somalia",Value="Somalia"},
+    new SelectListItem { Text="South Africa",Value="South Africa"},
+    new SelectListItem { Text="South Georgia",Value="South Georgia and the South Sandwich Islands"},
+    new SelectListItem { Text="Span",Value="Spain"},
+    new SelectListItem { Text="SriLanka",Value="Sri Lanka"},
+    new SelectListItem { Text="St. Helena",Value="St. Helena"},
+    new SelectListItem { Text="St. Pierre and Miguelon",Value="St. Pierre and Miquelon"},
+    new SelectListItem { Text="Sudan",Value="Sudan"},
+    new SelectListItem { Text="Suriname",Value="Suriname"},
+    new SelectListItem { Text="Svalbard",Value="Svalbard and Jan Mayen Islands"},
+    new SelectListItem { Text="Swaziland",Value="Swaziland"},
+    new SelectListItem { Text="Sweden",Value="Sweden"},
+    new SelectListItem { Text="Switzerland",Value="Switzerland"},
+    new SelectListItem { Text="Syria",Value="Syrian Arab Republic"},
+    new SelectListItem { Text="Taiwan",Value="Taiwan, Province of China"},
+    new SelectListItem { Text="Tajikistan",Value="Tajikistan"},
+    new SelectListItem { Text="Tanzania",Value="Tanzania, United Republic of"},
+    new SelectListItem { Text="Thailand",Value="Thailand"},
+    new SelectListItem { Text="Togo",Value="Togo"},
+    new SelectListItem { Text="Tokelau",Value="Tokelau"},
+    new SelectListItem { Text="Tonga",Value="Tonga"},
+    new SelectListItem { Text="Trinidad and Tobago",Value="Trinidad and Tobago"},
+    new SelectListItem { Text="Tunisia",Value="Tunisia"},
+    new SelectListItem { Text="Turkey",Value="Turkey"},
+    new SelectListItem { Text="Turkmenistan",Value="Turkmenistan"},
+    new SelectListItem { Text="Turks and Caicos",Value="Turks and Caicos Islands"},
+    new SelectListItem { Text="Tuvalu",Value="Tuvalu"},
+    new SelectListItem { Text="Uganda",Value="Uganda"},
+    new SelectListItem { Text="Ukraine",Value="Ukraine"},
+    new SelectListItem { Text="United Arab Emirates",Value="United Arab Emirates"},
+    new SelectListItem { Text="United Kingdom",Value="United Kingdom"},
+    new SelectListItem { Text="United States",Value="United States"},
+    new SelectListItem { Text="United States Minor Outlying Islands",Value="United States Minor Outlying Islands"},
+    new SelectListItem { Text="Uruguay",Value="Uruguay"},
+    new SelectListItem { Text="Uzbekistan",Value="Uzbekistan"},
+    new SelectListItem { Text="Vanuatu",Value="Vanuatu"},
+    new SelectListItem { Text="Venezuela",Value="Venezuela"},
+    new SelectListItem { Text="Vietnam",Value="Viet Nam"},
+    new SelectListItem { Text="Virgin Islands (British)",Value="Virgin Islands (British)"},
+    new SelectListItem { Text="Virgin Islands (U.S)",Value="Virgin Islands (U.S.)"},
+    new SelectListItem { Text="Wallis and Futana Islands",Value="Wallis and Futuna Islands"},
+    new SelectListItem { Text="Western Sahara",Value="Western Sahara"},
+    new SelectListItem { Text="Yemen",Value="Yemen"},
+    new SelectListItem { Text="Yugoslavia",Value="Yugoslavia"},
+    new SelectListItem { Text="Zambia",Value="Zambia"},
+    new SelectListItem { Text="Zimbabwe",Value="Zimbabwe"}
+
+
+                         }
+                         , new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Profile Image</label>
+
+
+                        @*<input type="file" name="files[]" id="js-upload-files" multiple>*@
+                        @*<input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />*@
+                        <input type="file" class="btn mybtn btn-square" value="Image" name="file1" style="border: solid 1px #BCBCBC; width: 100%" required/>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Contact No</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Contact No" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.ContactNo, new { @placeholder = "Contact No", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Address</label>
+                        <div>
+                            @*<input type="textarea" id="firstName" placeholder="Address" class="form-control" autofocus>*@
+                            @Html.TextAreaFor(model => model.Address, new { @placeholder = "Address", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Why do you want to work with Rohingya Crisis Foundation?</label>
+                        @*<input type="textarea" id="firstName" placeholder="Address" class="form-control" autofocus>*@
+                        @Html.TextAreaFor(model => model.WhyQ1, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">In which project, do you want to work?</label>
+                        @*<input type="textarea" id="firstName" placeholder="Address" class="form-control" autofocus>*@
+                        @Html.TextAreaFor(model => model.InQ2, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">What kind of skills/experiences do you have?</label>
+                        @*<input type="textarea" id="firstName" placeholder="Address" class="form-control" autofocus>*@
+                        @Html.TextAreaFor(model => model.WhatQ3, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Languages Spoken</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Languages" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.Language, new { @placeholder = "Languages", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="firstName" class="control-label">References</label>
+                        <div>
+                            <p>It is our policy to take one reference. Please give names and addresses of referee who have known you for around 12 months and who know you well enough to comment on your suitability for voluntary work.</p>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+
+                        </div>*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="firstName" class="control-label">Referee Name</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Referee Name" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.RefereeName, new { @placeholder = "Name", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="firstName" class="control-label">Contact No</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Contact No" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.RefereeConNumber, new { @placeholder = "Contact No", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="firstName" class="control-label">Email Address</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Email Address" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.RefereeEmail, new { @placeholder = "Email", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="firstName" class="control-label">Relation to you</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Relation" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.RefereeRelation, new { @placeholder = "Relation", @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="firstName" class="control-label">Terms & Conditions for RCF Membership</label>
+                        <div>
+                            <ul>
+                                <li>•Member must abide by the constitution, rules and regulations of the RCF.</li>
+                                <li>•Member must pay the membership fee of £20 once.</li>
+                                <li>•Member must pay monthly contribution fee of £10 within first week of every month.</li>
+                                <li>•Member must attend meetings and programs of the RCF to be held from time to time.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+
+                        </div>*@
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="firstName" class="control-label">Declaration</label>
+                        <div><p>I confirm that, to the best of my knowledge and belief, the information provided above is complete and correct. I understand that omitting and misrepresenting any relevant facts may subsequently affect my membership being refuse or terminated.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName" class="control-label">Print Full Name</label>
+                        <div>
+                            @*<input type="text" id="firstName" placeholder="Referee Name" class="form-control" autofocus>*@
+                            @Html.TextBoxFor(model => model.PrintName, new { @placeholder = "Print Name", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="birthDate" class="control-label">Date:</label>
+                        <div>
+                            @*<input type="date" id="birthDate" class="form-control">*@
+                            @Html.TextBoxFor(model => model.PrintDate, new { @id = "birthDate", @type = "date", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        @*<button type="submit" class="btn btn-primary btn-block">Register</button>*@
+                        <input id="Submit1" type="submit" class="btn btn-primary btn-block" value="Register" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    @*<div class="col-md-6">
+                            <h3>Membership fee of UK currency £20.00</h3>
+                        </div>*@
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block" disabled>Payment</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block" disabled>Paypal</button>
+                    </div>
+                </div>
+            </div>
+
+        </form> <!-- /form -->
+    </div> <!-- ./container -->
+}
+
+<style>
+    body {
+        background-color: #eee;
+    }
+
+    *[role="form"] {
+        max-width: 1151px;
+        padding: 54px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 0.3em;
+    }
+
+        *[role="form"] h2 {
+            margin-left: 5em;
+            margin-bottom: 1em;
+        }
+</style>

@@ -1,0 +1,70 @@
+﻿@model Mutualex.Donation
+
+@{
+    ViewBag.Title = "Redirecting To PayPal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+        <br /><br />
+        <h3 style="color: #bd8f36; text-align:center">Redirecting To PayPal... Please Wait..</h3>
+        <h5 style="color: #bd8f36; text-align: center">Don't Back and Refresh this Page..Wait Few Seconnds While We Process Your Transaction</h5>
+            <br />
+        <div style="text-align:center">
+            <img src="~/images/PaypPal-processing.gif" />
+            <br /><br />
+        </div>
+
+
+        <script>
+
+
+                window.onload = function () {
+                    //alert("dgfdgfdgfd");
+                    document.forms["hiddenform"].submit();
+
+                    document.getElementById('HeaderTemplt').style.display = "none"
+
+                }
+
+
+        </script>
+
+
+        @* <form id="hiddenform" action="https://www.paypal.com/cgi-bin/webscr">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="amount" value="@ViewBag.price">
+      <input type="hidden" name="currency_code" value="AUD">
+      <input type="hidden" name="item_name" value="AUD">
+      <input type="hidden" name="hosted_button_id" value="NN7X99C9AGKBW">
+      <input type="hidden" name="business" value="bookings@vicexecutivecars.com.au ">
+      <input type="hidden" name="paymentaction" value="sale">
+      <input type="hidden" name="cancel_return" value="http://demo61.gowebbi.in/Paypal/Success">
+      <input type="hidden" name="cancel_return" value="http://demo61.gowebbi.in/Paypal/Cancel">
+      <input type="hidden" name="return" value="http://demo61.gowebbi.in/Paypal/Success">
+    </form>*@
+
+
+        <form id="hiddenform" action="https://www.paypal.com/cgi-bin/webscr">
+
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="amount" value="@Model.Amount">
+            <input type="hidden" name="currency_code" value="AUD">
+            <input type="hidden" name="item_name" value="@Model.DonateFor">
+            <input type="hidden" name="hosted_button_id" value="NN7X99C9AGKBW">
+            @*<input type="hidden" name="business" value="abhijitbanerjee222@gmail.com">*@
+            <input type="hidden" name="business" value="alecmut@yahoo.com">
+            @*<input type="hidden" name="paymentaction" value="sale">*@
+
+            <input type="hidden" name="cancel_return" value="http://shukrani.net/PaypalDonation/Success">
+            <input type="hidden" name="cancel_return" value="http://shukrani.net/PaypalDonation/Cancel">
+            <input type="hidden" name="return" value="http://shukrani.net/PaypalDonation/Success">
+
+            @*<input type="hidden" name="cancel_return" value="http://localhost:49802/PaypalDonation/Success">
+            <input type="hidden" name="cancel_return" value="http://localhost:49802/PaypalDonation/Cancel">
+            <input type="hidden" name="return" value="http://localhost:49802/PaypalDonation/Success">*@
+
+        </form>
+
+
+    

@@ -1,0 +1,110 @@
+﻿@model Mutualex.FooterInfo
+@{
+    ViewBag.Title = "Footer Info";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    TempData["Footer"] = "class=" + "active";
+}
+
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-blue">
+                <div class="panel-heading">
+                    Footer Info
+                </div>
+                <div class="panel-body pan">
+                    @using (Html.BeginForm("Footerinfo", "Admin", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-body pal">
+                        @Html.HiddenFor(model => model.Id, new { })
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Contact Number</label>
+                                    @Html.TextBoxFor(model => model.ContNo, new { @placeholder = "Contact Number", @class = "form-control" })
+                                </div>                                
+                                <div class="col-md-6">
+                                    <label>Twitter url</label>
+                                    @Html.TextBoxFor(model => model.Twit, new { @placeholder = "Twitter", @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Address</label>
+                                    @Html.TextBoxFor(model => model.Address, new { @placeholder = "Address", @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Facebook url</label>
+                                    @Html.TextBoxFor(model => model.Fb, new { @placeholder = "Facebook", @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Email Address</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email Address", @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Youtube Url</label>
+                                    @Html.TextBoxFor(model => model.YouTube, new { @placeholder = "Youtube", @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>&nbsp;</label><br />
+                                    <input id="Submit1" type="submit" class="btn btn-success" value="SUBMIT" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Instagram url</label>
+                                    @Html.TextBoxFor(model => model.Instagram, new { @placeholder = "Instagram", @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+
+
+    <script src="/admin_assets/vendors/DataTables/media/js/jquery.dataTables.js"></script>
+    <script src="/admin_assets/vendors/DataTables/media/js/dataTables.bootstrap.js"></script>
+    <script src="/admin_assets/vendors/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+    <script src="/admin_assets/js/table-datatables.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/summernote/summernote.css">
+    <script src="~/admin_assets/vendors/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+    <script src="~/admin_assets/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="~/admin_assets/vendors/ckeditor/ckeditor.js"></script>
+    <script src="~/admin_assets/vendors/summernote/summernote.js"></script>
+    <script src="~/admin_assets/js/ui-editors.js"></script>
+
+
+
+    <script src="/admin_assets/js/form-components.js"></script>
+
+
+}
+
+
+

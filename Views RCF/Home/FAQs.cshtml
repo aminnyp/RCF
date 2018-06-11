@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+    ViewBag.Title = "FAQs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    TempData["FAQs"] = "active";
+}
+
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+
+<section>
+    <div class="container">
+        @*<div class="row" style="margin-top:-10px;">
+            <h3>1) I have made a donation but I have a problem with it. Can you help?</h3>
+            <p>Yes. Please email supportercare@unhcr.org with the details of your donation and we will assist you as best we can.</p>
+            <h3> 2) Can I make a donation for refugees from or in a particular country?</h3>
+            <p>
+                We always ask our supporters to first consider making a general donation to UNHCR as your gift can then go towards funding our vital, lifesaving operations all around the world, and we can direct your donation to the most vulnerable people as new emergencies arise. Situations where people have run for their lives can change very quickly, and UNHCR has to juggle its operational and finite financial resources to ensure that we get to everyone who needs our help as quickly as possible.
+                However, you can make donations to specific UNHCR appeals for certain regions, like our Syria appeal, or our South Sudan appeal. For more information about donating to our appeals, please email us at supportercare@unhcr.org.
+            </p>
+            <h3>3) Can UNHCR claim gift aid on my donation?</h3>
+            <p>
+                UNHCR is not currently able to claim gift aid on a donation made to us directly. This is because as an agency of the United Nations, we are exempt from being required to be registered as a non-profit in the traditional sense and therefore do not have a charity number (necessary for claiming gift aid).
+                However, you can make a donation to our account with the Charities Aid Foundation (CAF) on which gift aid can be claimed. For more information on how to do this, please email supportercare@unhcr.org.
+            </p>
+            <h3>4) I have a spare room or property that I would like to offer to refugees. Can UNHCR help me organise this?</h3>
+            <p>UNHCR is not in a position to assist with this type of request, but other organisations may be able to help. UNHCR has been heartened by the increasing number of people generously offering to share their homes and properties with refugees. The UK government works with local authorities to house people seeking asylum in the UK. If you are interested in providing housing to asylum seekers whose applications have been refused, we would suggest contacting NACCOM. If you are based in London and you have a flat, house, or spare room you would like to rent to a refugee you can contact the Refugee Council. If you represent a charity or community organisation, you can now support resettled refugees through community sponsorship. For more information on how you can support refugees in the UK visit the Home Office website, or contact your local authority.</p>
+            <h3>5) How will my donation be used?</h3>
+            <p>
+                All of UNHCR’s programmes are designed to help find lasting solutions to refugees’ problems, whether it’s helping them return home or settle in other countries. The agency’s work around the world falls under these main sectors: shelter, health care and nutrition, income generation, water and sanitation, education, legal assistance and protection.
+                All programmes and sectoral projects are intended to mitigate the harsh circumstances in which refugees find themselves and to create opportunities to re-establish their lives. Special focus is given to the most vulnerable, especially women, children, older people and those living with disabilities. Your donation could go towards funding any of these vital activities.
+            </p>
+            <h3>6) How much of my donation is spent on helping refugees versus admin costs and other overheads?</h3>
+            <p>UNHCR's administrative costs account for approximately 10 percent of the total budget. Nearly 90 percent of all funds are spent on services directly helping refugees and more than 80 percent of our staff work in the field. Fundraising, public awareness and advocacy costs represent only 1 percent of UNHCR's total budget. However, for particular appeals, the percentage spent directly on supporting refugees may vary. If you would like to know more about our appeals with particularly low overhead costs, please contact us at supportercare@unhcr.org.</p>
+            <h3>7) I have written a song / made a product / run a service and would like to partner with UNHCR to give you a share of my proceeds. Can I do this?</h3>
+            <p>For UNHCR to partner with an individual or organisation for fundraising purposes is a complex process, often with legal implications. We are therefore unable to do this as often as we would like. In most cases, the best way for you to support UNHCR with your project is to fundraise for us individually and to then make a single donation to us. However, if you would like to discuss your project further, please email</p>
+        </div>*@
+    </div>
+</section>
+<style>
+    .pt-5{
+        padding-top:5px;
+    }
+</style>

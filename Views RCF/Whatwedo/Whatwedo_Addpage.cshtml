@@ -1,0 +1,132 @@
+﻿@model Mutualex.Whatwedo_Master
+@{
+    ViewBag.Title = "What We Do";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    TempData["Whatwedo"] = "class=" + "active";
+
+    TempData["WhatAddpage"] = "class=" + "active";
+
+    TempData["PageTitle"] = "What We Do Page";
+
+}
+
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-blue">
+                <div class="panel-heading">
+                    What We Do Page Master
+                </div>
+                <div class="panel-body pan">
+                    @using (Html.BeginForm("Whatwedo_AddPage", "Whatwedo", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-body pal">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>Enter Page Name</label>
+                                    @Html.TextAreaFor(model => model.PageName, new { @placeholder = "Enter Page Name", @class = "form-control" })  <!--id = "summernote-default"-->
+                                    @Html.HiddenFor(model => model.Srno)
+                                </div>
+                            </div>
+                            <div class="clearfix mb5"></div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label>&nbsp;</label><br />
+                                    <input id="Submit1" type="submit" class="btn btn-success" value="SUBMIT" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet box panel panel-grey">
+                <div class="panel-heading">
+                    Page List
+                </div>
+                <div class="portlet-body">
+                    <div class="row mbm">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table id="table_id" class="table table-hover table-striped table-bordered tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>Edit</th>
+                                            <th>Page Id</th>
+                                            <th>Page Name</th>
+                                            <th>Delete</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Mutualex.Whatwedo_Master i in ViewBag.PageList)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="/Whatwedo/Whatwedo_AddPage/@i.Srno" class="btn btn-primary btn-xs Cat_dataMod">
+                                                        <i class="fa fa-edit"></i>&nbsp; Edit
+                                                    </a>
+                                                </td>
+                                                <td>@i.Srno</td>
+                                                <td>@i.PageName</td>
+
+                                                @*<td>@(Regex.Replace(i.FullDescription, "<.*?>", string.Empty).Length >= 100 ? Regex.Replace(i.FullDescription, "<.*?>", string.Empty).Substring(0, 100) : Regex.Replace(i.FullDescription, "<.*?>", string.Empty)) </td>
+                                                    <td>
+                                                        @{
+                                                            var t = i.MediaType == "I" ? "Image" : i.MediaType == "V" ? "Video" : i.MediaType == "VM" ? "Vimeo" : "Youtube";
+                                                            <text>@t</text>
+                                                        }
+                                                    </td>*@
+
+                                                @*<td>
+                                                        @if (i.IsActive == true)
+                                                        {
+                                                            <a href="javascript:void(0)" class="btn btn-success btn-sm">ACTIVE</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm">DEACTIVE</a>
+                                                        }
+                                                    </td>*@
+                                                <td>
+                                                    <a href="/Whatwedo/DelPage/@i.Srno" class="btn btn-pink btn-xs Cat_dataMod">
+                                                        <i class="fa fa-edit"></i>&nbsp; Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script src="/admin_assets/vendors/DataTables/media/js/jquery.dataTables.js"></script>
+    <script src="/admin_assets/vendors/DataTables/media/js/dataTables.bootstrap.js"></script>
+    <script src="/admin_assets/vendors/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+    <script src="/admin_assets/js/table-datatables.js"></script>
+}
+

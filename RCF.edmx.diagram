@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="62df7fd1db0c4462b68484c0d1bef9e1" Name="Diagram1">
+        <EntityTypeShape EntityType="RNMediaModel.About" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Blog" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Donation" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Event" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RNMediaModel.FooterInfo" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RNMediaModel.HappyDonor" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RNMediaModel.ImageGallery" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.JoinU" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Multiple" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="RNMediaModel.News" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Slider" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_Content" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_Content2" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_Login" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_Menu" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_SubMenu" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_SubMenu_Level2" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Testimonial" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="RNMediaModel.tbl_Contact" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RNMediaModel.AboutUs_New" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="RNMediaModel.AboutUs_New_Master" Width="1.5" PointX="11.375" PointY="10.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Subscribe" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="RNMediaModel.TermCondition" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RNMediaModel.PrivacyPolicy" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="RNMediaModel.MeetOurTeam" Width="1.5" PointX="13.375" PointY="3.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Whatwedo_Master" Width="1.5" PointX="13.375" PointY="6.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Whatwedo_Sub" Width="1.5" PointX="13.375" PointY="9.75" />
+        <EntityTypeShape EntityType="RNMediaModel.Membership_reg" Width="1.5" PointX="3.375" PointY="14.75" />
+        <EntityTypeShape EntityType="RNMediaModel.AttandenceMaster" Width="1.5" PointX="9.375" PointY="13.75" />
+        <EntityTypeShape EntityType="RNMediaModel.AttendanceDetail" Width="1.5" PointX="11.375" PointY="13.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

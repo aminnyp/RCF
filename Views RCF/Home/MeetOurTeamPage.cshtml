@@ -1,0 +1,20 @@
+﻿@model Mutualex.MeetOurTeam
+@{
+    ViewBag.Title = "Meet Our Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (Mutualex.MeetOurTeam item in ViewBag.MeetOurTeamList) { 
+                @*<h2>@item.Title</h2>*@
+                <p>@Html.Raw(HttpUtility.HtmlDecode(item.Description))</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

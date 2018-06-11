@@ -1,0 +1,462 @@
+﻿@{
+    try
+    {
+        HttpCookie loginCookie = Request.Cookies["login_cookie"];
+        if (loginCookie["UserType"] != "ADMIN")
+        {
+
+            Response.Redirect("~/Account/Index");
+
+        }
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>:- RCF -: @ViewBag.Title</title>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="cache-control" content="no-cache">
+            <link rel="shortcut icon" href="/images/favicon.ico" />
+            <link rel="apple-touch-icon" href="/images/favicon.ico" />
+            <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon.ico" />
+            <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon.ico" />
+            <!--Loading bootstrap css-->
+            <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700" />
+            <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/font-awesome/css/font-awesome.min.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/bootstrap/css/bootstrap.min.css" />
+            <!--LOADING STYLESHEET FOR PAGE-->
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/intro.js/introjs.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/calendar/zabuto_calendar.min.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/sco.message/sco.message.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/intro.js/introjs.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/select2/select2-madmin.css">
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/bootstrap-select/bootstrap-select.min.css">
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/multi-select/css/multi-select-madmin.css">
+            <!--Loading style vendors-->
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/animate.css/animate.css" />
+            @*<link type="text/css" rel="stylesheet" href="/admin_assets/vendors/jquery-pace/pace.css" />*@
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/iCheck/skins/all.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/jquery-notific8/jquery.notific8.min.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+            <!--Loading style-->
+            <link type="text/css" rel="stylesheet" href="/admin_assets/css/themes/style1/orange-blue.css" class="default-style" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/css/themes/style1/orange-blue.css" id="theme-change" class="style-change color-change" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/css/style-responsive.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/DataTables/media/css/jquery.dataTables.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/DataTables/media/css/dataTables.bootstrap.css" />
+            <link type="text/css" rel="stylesheet" href="/admin_assets/vendors/animate.css/animate.css" />
+            <script src="/admin_assets/js/jquery-1.10.2.min.js"></script>
+        </head>
+        <body>
+
+
+            <div>
+                <!--BEGIN BACK TO TOP-->
+                <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
+                <!--END BACK TO TOP-->
+                <!--BEGIN TOPBAR-->
+                <div id="header-topbar-option-demo" class="page-header-topbar">
+                    <nav id="topbar" role="navigation" style="margin-bottom: 0; z-index: 2;" class="navbar navbar-default navbar-static-top">
+                        <div class="navbar-header">
+                            <button type="button" data-toggle="collapse" data-target=".sidebar-collapse" class="navbar-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a id="logo" href="/Admin" class="navbar-brand">
+                                <span class="fa fa-rocket"></span>
+                                <span class="logo-text">Admin</span>
+                                <span style="display: none" class="logo-text-icon"><i class="fa fa-user"></i></span>
+                            </a>
+                        </div>
+                        <div class="topbar-main">
+                            <a id="menu-toggle" href="#" class="hidden-xs">
+                                <i class="fa fa-bars"></i>
+                            </a>
+
+                            <ul class="nav navbar navbar-top-links navbar-right mbn">
+                                @*@Html.Partial("_PartialNotificationHeader")*@
+                              
+                                <li class="dropdown topbar-user">
+                                    <a data-hover="dropdown" href="#" class="dropdown-toggle">
+                                        @if (@loginCookie.Values["UserImg"] == "" || @loginCookie.Values["UserImg"] == null)
+                                        {
+                                            <i class="fa fa-user"></i>
+                                        }
+                                        else
+                                        {
+                                            <img src="@loginCookie.Values["UserImg"]" alt="" class="img-responsive img-circle" />
+                                        }&nbsp;
+                                        <span class="hidden-xs">
+                                            @loginCookie.Values["UserFullName"]
+                                        </span>&nbsp;<span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user pull-right">
+
+                                        <li><a href="/Account/Change_Pass"><i class="fa fa-key"></i>Change Password</a></li>
+                                        <li><a href="/Account/Index"><i class="fa fa-lock"></i>Log Out</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <!--END TOPBAR-->
+                <div id="wrapper">
+                    <!--BEGIN SIDEBAR MENU-->
+                    <nav id="sidebar" role="navigation" class="navbar-default navbar-static-side">
+                        <div class="sidebar-collapse menu-scroll">
+                            <ul id="side-menu" class="nav">
+                                <li class="user-panel"></li>
+                                <li @TempData["Dashboard1"]>
+                                    <a href="/Admin">
+                                        <i class="fa fa-tachometer fa-fw"></i><span class="menu-title">Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li @TempData["Home"]>
+                                    <a href="/Content/Home/1013/">
+                                        <i class="fa fa-home fa-fw"></i>
+                                        <span class="menu-title">Home</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["AddSlider"]>
+                                            <a href="/BasicSetting/Slider">
+                                                <span class="submenu-title">Slider</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["Testimonial"]>
+                                            <a href="/BasicSetting/Testimonial">
+                                                <span class="submenu-title">Testimonial</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["Happydonors"]>
+                                            <a href="/BasicSetting/HappyDonors">
+                                                <span class="submenu-title">Happy Donors</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["Content1"]>
+                                            <a href="/BasicSetting/Content">
+                                                <span class="submenu-title">Content-1</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["Content2"]>
+                                            <a href="/Home/Content2">
+                                                <span class="submenu-title">Content-2</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li @TempData["AboutUs_New"]>
+                                    <a href="/AboutUs/AboutUs_AddPage">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">About Us</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["AboutHome"]>
+                                            <a href="/BasicSetting/AboutUs">
+                                                <span class="submenu-title">About Us Home Page</span>
+                                            </a>
+                                        </li>
+
+                                        <li @TempData["PageName"]>
+                                            <a href="/AboutUs/AboutUs_AddPage">
+                                                <span class="submenu-title">Add Page</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["Content"]>
+                                            <a href="/AboutUs/Content">
+                                                <span class="submenu-title">Add Content</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li @TempData["Whatwedo"]>
+                                    <a href="/Whatwedo/Whatwedo_AddPage">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">What We Do</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["whathome"]>
+                                            <a href="/Admin/Whatwedo">
+                                                <span class="submenu-title">What we Do Home Page</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["WhatAddpage"]>
+                                            <a href="/Whatwedo/Whatwedo_AddPage">
+                                                <span class="submenu-title">What we Do Add Page</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["WhatContent"]>
+                                            <a href="/Whatwedo/Content">
+                                                <span class="submenu-title">What We Do Add Content</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li @TempData["Membership"]>
+                                    <a href="/Membership/List">
+                                        <i class="fa fa-list" aria-hidden="true"></i><span class="menu-title">Member List</span>
+                                    </a>
+                                </li>
+                                <li @TempData["Attendance"]>
+                                    <a href="/Attendance">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Attendance</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        @*<li @TempData["AttendanceMaster"]>
+                                            <a href="/Attendance">
+                                                <span class="submenu-title">Attendance Master</span>
+                                            </a>
+                                        </li>*@
+                                        <li @TempData["GiveAttendance"]>
+                                            <a href="/Attendance/GiveAttendance">
+                                                <span class="submenu-title">Take Attendance</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["AttendanceList"]>
+                                            <a href="/Attendance/AttendList">
+                                                <span class="submenu-title">Attendance List</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li @TempData["Gallery"]>
+                                    <a href="/gallery/Add">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Gallery</span>
+                                    </a>
+                                </li>
+
+                                <li @TempData["Setting"]>
+                                    <a href="/Blog/PostBlog">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Blog</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["post"]>
+                                            <a href="/Blog/PostBlog">
+                                                <span class="submenu-title">Post Blog</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["BlogList"]>
+                                            <a href="/Blog/BlogList">
+                                                <span class="submenu-title">Blog List</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+
+                                <li @TempData["EvntSetting"]>
+                                    <a href="/Event/PostEvent">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Event</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["Event"]>
+                                            <a href="/Event/PostEvent">
+                                                <span class="submenu-title">Post Event</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["EventList"]>
+                                            <a href="/Event/EventList">
+                                                <span class="submenu-title">Event List</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li @TempData["NewsSetting"]>
+                                    <a href="/News/PostNews">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">News</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["News"]>
+                                            <a href="/News/PostNews">
+                                                <span class="submenu-title">Post News</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["NewsList"]>
+                                            <a href="/News/NewsList">
+                                                <span class="submenu-title">News List</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+
+
+
+
+
+
+
+
+                                <li @TempData["Donation"]>
+                                    <a href="/Home/DonationList">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Donation List</span>
+                                    </a>
+                                </li>
+
+
+
+
+                                @*<li @TempData["AboutUs"]>
+                                        <a href="/BasicSetting/AboutUs">
+                                            <i class="fa fa-picture-o"></i>
+                                            <span class="menu-title">About Us</span>
+                                        </a>
+                                    </li>*@
+
+                                    @*<li @TempData["JoinUs"]>
+                                        <a href="/Admin/JoinUsList">
+                                            <i class="fa fa-picture-o"></i>
+                                            <span class="menu-title">Join Us</span>
+                                        </a>
+                                    </li>*@
+
+                                <li @TempData["MeetOurTeam"]>
+                                    <a href="/Admin/MeetOurTeam">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Meet Our Team</span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li @TempData["AddMeetOurTeam"]>
+                                            <a href="/Admin/MeetOurTeam">
+                                                <span class="submenu-title">Add Meet Our Team</span>
+                                            </a>
+                                        </li>
+                                        <li @TempData["ListMeetOurTeam"]>
+                                            <a href="/Admin/MeetOurTeamList">
+                                                <span class="submenu-title">List Meet Our Team</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li @TempData["TermCondition"]>
+                                        <a href="/Admin/TermCondition">
+                                            <i class="fa fa-picture-o"></i>
+                                            <span class="menu-title">Term&Condition</span>
+                                        </a>
+                                    </li>
+
+                                    <li @TempData["PrivacyPolicy"]>
+                                        <a href="/Admin/PrivacyPolicy">
+                                            <i class="fa fa-picture-o"></i>
+                                            <span class="menu-title">Privacy Policy</span>
+                                        </a>
+                                    </li>
+
+                                <li @TempData["Footer"]>
+                                    <a href="/Admin/Footerinfo">
+                                        <i class="fa fa-picture-o"></i>
+                                        <span class="menu-title">Footer Info</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                    <!--END SIDEBAR MENU-->
+                    <!--BEGIN CHAT FORM-->
+                    @*@Html.Partial("_PartialChatSidebar")*@
+                    <!--END CHAT FORM-->
+
+
+
+                    <!--BEGIN PAGE WRAPPER-->
+                    <div id="page-wrapper">
+                        <!--BEGIN TITLE & BREADCRUMB PAGE-->
+                        <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+                            <div class="page-header pull-left">
+                                <div class="page-title">@TempData["PageTitle"]</div>
+                            </div>
+                            <ol class="breadcrumb page-breadcrumb pull-left">
+                                <li class="hidden"><a href="#"></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                                <li class="active"></li>
+                            </ol>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!--END TITLE & BREADCRUMB PAGE-->
+
+                        @RenderBody()
+
+                    </div>
+                    <!--BEGIN FOOTER-->
+                    <div id="footer">
+                        <div class="copyright">
+
+                        </div>
+                        <div class="designer">
+                            Designing & Developed By <a href="http://gowebbi.com" target="_blank">gowebbi.com</a>
+                        </div>
+                        <!--END FOOTER-->
+                        <!--END PAGE WRAPPER-->
+                    </div>
+                    <!--END FOOTER-->
+                    <!--END PAGE WRAPPER-->
+                </div>
+            </div>
+
+
+
+
+           
+            <script src="/admin_assets/js/jquery-migrate-1.2.1.min.js"></script>
+            <script src="/admin_assets/js/jquery-ui.js"></script>
+            <!--loading bootstrap js-->
+            <script src="/admin_assets/vendors/bootstrap/js/bootstrap.min.js"></script>
+            <script src="/admin_assets/vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js"></script>
+            <script src="/admin_assets/js/html5shiv.js"></script>
+            <script src="/admin_assets/js/respond.min.js"></script>
+            <script src="/admin_assets/vendors/metisMenu/jquery.metisMenu.js"></script>
+            <script src="/admin_assets/vendors/slimScroll/jquery.slimscroll.js"></script>
+            <script src="/admin_assets/vendors/jquery-cookie/jquery.cookie.js"></script>
+            <script src="/admin_assets/vendors/iCheck/icheck.min.js"></script>
+            <script src="/admin_assets/vendors/iCheck/custom.min.js"></script>
+            <script src="/admin_assets/vendors/jquery-notific8/jquery.notific8.min.js"></script>
+            <script src="/admin_assets/vendors/jquery-highcharts/highcharts.js"></script>
+            <script src="/admin_assets/js/jquery.menu.js"></script>
+            @*<script src="/admin_assets/vendors/jquery-pace/pace.min.js"></script>*@
+            <script src="/admin_assets/vendors/holder/holder.js"></script>
+            <script src="/admin_assets/vendors/responsive-tabs/responsive-tabs.js"></script>
+            <script src="/admin_assets/vendors/jquery-news-ticker/jquery.newsTicker.min.js"></script>
+            <script src="/admin_assets/vendors/moment/moment.js"></script>
+            <script src="/admin_assets/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+            <script src="/admin_assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!--CORE JAVASCRIPT-->
+            <script src="/admin_assets/js/main.js"></script>
+            <script src="/admin_assets/vendors/select2/select2.min.js"></script>
+            <script src="/admin_assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+            <script src="/admin_assets/vendors/multi-select/js/jquery.multi-select.js"></script>
+            <script src="/admin_assets/js/ui-dropdown-select.js"></script>
+            <!--LOADING SCRIPTS FOR PAGE-->
+            @*@Html.Partial("_Partial_sp_ChatRoom")*@
+
+            @RenderSection("scripts", required: false)
+        </body>
+    </html>
+    }
+    catch(Exception ex)
+    {
+        string exec = ex.ToString();
+            Response.Redirect("~/Account");
+    }
+
+}
+

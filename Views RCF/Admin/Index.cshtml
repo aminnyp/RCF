@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Admin Home";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    TempData["Dashboard1"] = "class=" + "active";
+    TempData["PageTitle"] = "Dashboard";
+}
+
+<!--BEGIN CONTENT-->
+<div class="page-content" style="min-height: 505px">
+    <div id="tab-general">
+
+        <div id="sum_box" class="row text-center" style="padding: 130px">          
+            <h4 style="text-align: center; font-size: 50px">Welcome To</h4>
+            @*<img src="http://demo20.gowebbi.com/images/2016-08-29.png"  style="height:110px;"/>*@
+            <img src="/images/2016-12-20.png" alt="" style="height:175px;"><span style="color:black;font-size:21px;"><b>Rohingya</b></span>&nbsp;<span style="color:red;font-size:21px;"><b>Crisis</b></span>&nbsp;<span style="color:green;font-size:21px;"><b>Foundation</b></span>
+            @*<h3>Admin</h3>*@
+        </div>
+    </div>
+</div>
+<!--END CONTENT-->
+
+@section scripts{
+    <script src="/admin_assets/vendors/intro.js/intro.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.categories.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.pie.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.tooltip.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.resize.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.fillbetween.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.stack.js"></script>
+    <script src="/admin_assets/vendors/flot-chart/jquery.flot.spline.js"></script>
+    <script src="/admin_assets/vendors/calendar/zabuto_calendar.min.js"></script>
+    <script src="/admin_assets/vendors/sco.message/sco.message.js"></script>
+    <script src="/admin_assets/vendors/intro.js/intro.js"></script>
+    <script src="/admin_assets/js/index.js"></script>
+
+}
+

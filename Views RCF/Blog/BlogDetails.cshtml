@@ -1,0 +1,64 @@
+﻿@model Mutualex.Blog
+@{
+    ViewBag.Title = "Blog Details";
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Section: Blog -->
+<section>
+    <div class="container mt-30 mb-30 pt-30 pb-30">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="blog-posts single-post">
+                    <article class="post clearfix mb-0">
+                        <div class="entry-header">
+                            <div class="post-thumb thumb">
+
+                                @if (!string.IsNullOrEmpty(Model.MediaUrl))
+                                {
+                                    <img src="@Model.MediaUrl.Replace("~", "")" alt="" class="img-responsive img-fullwidth" style="height:400px;">
+                                }
+
+                                @if (Model.VideoUrl != null)
+                                {
+
+                                    if (Model.Mediatype != "Vimeo")
+                                    {
+                                        <iframe allowfullscreen="true" allowscriptaccess="always" frameborder="0" height="280" src="https://www.youtube.com/embed/@Model.VideoUrl" title="YouTube video player" width="640" style="height: 397px;width: 100%;"></iframe>
+
+                                    }
+                                    else
+                                    {
+                                        <iframe src="https://player.vimeo.com/video/@Model.VideoUrl" width="640" height="397" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+                        <div class="entry-content" style="text-align:justify">
+                            <div class="entry-meta media no-bg no-border mt-15 pb-20">
+                                <div class="entry-date media-left text-center flip bg-theme-colored pt-5 pr-15 pb-5 pl-15" style="width: 8%;">
+                                    <ul>
+                                        <li class="font-16 text-white font-weight-600">@Model.OnDate.GetValueOrDefault().ToString("dd MMM")</li>
+                                        <li class="font-12 text-white text-uppercase">@Model.OnDate.GetValueOrDefault().ToString("yyyy")</li>
+                                    </ul>
+                                </div>
+                                <div class="media-body pl-15">
+                                    <div class="event-content pull-left flip">
+                                        <h4 class="entry-title text-white text-uppercase m-0" style="color: #696969 !important">@Model.Title</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mb-15">
+                                @Html.Raw(HttpUtility.HtmlDecode(Model.Description))
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

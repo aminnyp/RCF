@@ -1,0 +1,21 @@
+﻿@model Mutualex.TermCondition
+@{
+    ViewBag.Title = "Terms & Conditions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderImage = "/images/bg/bg12.jpg";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>@Model.Title</h2>
+                <p>
+                   @Html.Raw(HttpUtility.HtmlDecode(Model.TermCondition1))
+                </p>
+                
+            </div>
+        </div>
+    </div>
+</section>
+

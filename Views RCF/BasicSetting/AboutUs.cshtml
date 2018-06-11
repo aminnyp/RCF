@@ -1,0 +1,130 @@
+﻿@model Mutualex.About
+@{
+    TempData["PageTitle"] = "Add About Us";
+    TempData["AboutUs"] = "class=" + "active";
+    ViewBag.Title = "AboutUs";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@if (TempData["MSG"] != null)
+{
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <strong>@TempData["MSG"]</strong>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-blue">
+                <div class="panel-heading">
+                    Add AboutUs
+                </div>
+                <div class="panel-body pan">
+                    @using (Html.BeginForm("AboutUs", "BasicSetting", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-body pal">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Title1: </label>
+                                    @Html.TextBoxFor(model => model.PageName, new { @placeholder = "Title1", @required = "required", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.Id, new { })
+                                </div>
+                                @*<div class="col-md-6">
+                                    <label>Title2: </label>
+                                    @Html.TextBoxFor(model => model.Title2, new { @placeholder = "Title2", @required = "required", @class = "form-control" })
+                                </div>*@
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>Description: </label>
+                                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @id = "summernote-default",@type = "text", @placeholder = "Description", @style = "height: 120px" })
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Box SignUp Text Title : </label>
+                                    @Html.TextBoxFor(model => model.Box1Title, new { @class = "form-control", @type = "text", @placeholder = "Box SignUp Text Title",@maxlength="200" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Box Donate Now Text Title : </label>
+                                    @Html.TextBoxFor(model => model.Box2Title, new { @class = "form-control", @type = "text", @placeholder = "Box Donate Now Text Title", @maxlength = "200" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Box SignUp Text : </label>
+                                    @Html.TextBoxFor(model => model.Box1, new { @class = "form-control", @type = "text", @placeholder = "Box SignUp Text"  })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Box Donate Now Text : </label>
+                                    @Html.TextBoxFor(model => model.Box2, new { @class = "form-control", @type = "text", @placeholder = "Box Donate Now Text" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>What we do? </label>
+                                    @Html.TextAreaFor(model => model.Whatwedo, new { @class = "form-control", @type = "text", @placeholder = "What we do", @style = "height: 120px" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>Who we are? </label>
+                                    @Html.TextAreaFor(model => model.Whoweare, new { @class = "form-control", @type = "text", @placeholder = "Who we are", @style = "height: 120px" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>Our Mission: </label>
+                                    @Html.TextAreaFor(model => model.Ourmission, new { @class = "form-control", @type = "text", @placeholder = "Our Mission", @style = "height: 148px" })
+                                </div>
+                            </div>*@
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label> &nbsp;</label><br />
+                                    <input id="Submit1" type="submit" class="btn btn-success " value="SUBMIT" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link type="text/css" rel="stylesheet" href="~/admin_assets/vendors/summernote/summernote.css">
+    <script src="~/admin_assets/vendors/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+    <script src="~/admin_assets/vendors/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="~/admin_assets/vendors/ckeditor/ckeditor.js"></script>
+    <script src="~/admin_assets/vendors/summernote/summernote.js"></script>
+    <script src="~/admin_assets/js/ui-editors.js"></script>
+    <script src="/admin_assets/vendors/DataTables/media/js/jquery.dataTables.js"></script>
+    <script src="/admin_assets/vendors/DataTables/media/js/dataTables.bootstrap.js"></script>
+    <script src="/admin_assets/vendors/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+    <script src="/admin_assets/js/table-datatables.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
